@@ -68,9 +68,9 @@ class User extends BaseController
 
     if (!$validation->withRequest($this->request)->run()) {
       session()->setFlashdata([
-        'title' => 'Gagal',
-        'icon' => 'Validasi gagal',
-        'text' => $validation->getErrors()
+        'title' => 'Validasi gagal',
+        'icon' => 'error',
+        'text' => implode('<br>', $validation->getErrors())
       ]);
       return redirect()->to(base_url('dashboard/user'));
     }

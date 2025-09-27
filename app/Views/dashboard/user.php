@@ -82,7 +82,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="name">Nama Lengkap <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" required>
                 <?php if (isset(session('errors')['name'])): ?>
                   <small class="text-danger"><?= session('errors')['name'] ?></small>
                 <?php endif ?>
@@ -91,7 +91,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="email">Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
                 <?php if (isset(session('errors')['email'])): ?>
                   <small class="text-danger"><?= session('errors')['email'] ?></small>
                 <?php endif ?>
@@ -103,6 +103,7 @@
               <div class="form-group">
                 <label for="whatsapp">Whatsapp <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="whatsapp" name="whatsapp" placeholder="628xxxx">
+                <small class="text-muted">Format: 628xxxxx</small>
                 <?php if (isset(session('errors')['whatsapp'])): ?>
                   <small class="text-danger"><?= session('errors')['whatsapp'] ?></small>
                 <?php endif ?>
@@ -121,6 +122,15 @@
                 <?php if (isset(session('errors')['role'])): ?>
                   <small class="text-danger"><?= session('errors')['role'] ?></small>
                 <?php endif ?>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                <small class="text-muted">Biarkan kosong jika tidak ingin mengganti password</small>
               </div>
             </div>
           </div>
@@ -283,13 +293,16 @@
 
     if (id) {
       let d = data.find(item => item.id == id);
-      console.log(d.photo);
+      $('#password').removeAttr('required');
+      $('#password').closest('small.text-muted').text('Biarkan kosong jika tidak ingin mengganti password.');
       if (d.photo) {
         $('#photopreview').attr('src', `<?= base_url('') ?>${d.photo}`);
       } else {
         $('#photopreview').attr('src', `<?= base_url('public/uploads/users/default.png') ?>`);
       }
     } else {
+      $('#password').attr('required', 'required');
+      $('#password').siblings('small.text-muted').text('Minimal 8 karakter.');
       $('#photopreview').attr('src', `<?= base_url('public/uploads/users/default.png') ?>`);
     }
   });
@@ -305,6 +318,8 @@
     formActionUrl: id => '<?= base_url('dashboard/user/') ?>' + (id ? 'update/' : 'store'),
     findData: id => data.find(item => item.id == id),
     defaultValues: {
+      role: 'agen',
+      status: 'aktif',
     },
     fieldMap: {
       inputs: [{
