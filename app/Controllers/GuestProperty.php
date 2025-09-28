@@ -73,7 +73,7 @@ class GuestProperty extends BaseController
         'icon' => 'error',
         'text' => implode("\n", array_values($this->validator->getErrors())),
       ]);
-      return redirect()->to(base_url('tawarkan-properti'))
+      return redirect()->to(base_url('jual-rumah'))
         ->withInput()->with('validation', $this->validator);
     }
 
@@ -146,14 +146,14 @@ class GuestProperty extends BaseController
         'icon' => 'success',
         'text' => 'Properti Anda telah berhasil disubmit dan sedang dalam proses verifikasi.'
       ]);
-      return redirect()->to('tawarkan-properti/success');
+      return redirect()->to('jual-rumah/success');
     } else {
       session()->setFlashdata([
         'title' => 'Properti gagal disubmit',
         'icon' => 'error',
         'text' => 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.'
       ]);
-      return redirect()->to('tawarkan-properti');
+      return redirect()->to('jual-rumah');
     }
   }
 

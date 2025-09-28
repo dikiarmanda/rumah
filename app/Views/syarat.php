@@ -19,7 +19,7 @@
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #eee;
-    color: #4c80ae;
+    color: #1b5396;
   }
 
   .policy-container p, .policy-container li {
@@ -32,7 +32,7 @@
   }
 
   .policy-container a {
-    color: #4c80ae;
+    color: #1b5396;
     text-decoration: none;
   }
 

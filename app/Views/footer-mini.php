@@ -14,8 +14,9 @@
       </div>
       <div class="col-6 col-lg-2">
         <ul class="list-unstyled text-white-50 mb-0">
-          <li><a href="<?= base_url('jual') ?>">Jual Properti</a></li>
-          <li><a href="<?= base_url('sewa') ?>">Sewa Properti</a></li>
+          <li><a href="<?= base_url('cari-rumah') ?>">Cari Rumah</a></li>
+          <li><a href="<?= base_url('jual-rumah') ?>">Jual Rumah</a></li>
+          <li><a href="<?= base_url('sewa') ?>">Sewa Rumah</a></li>
           <li><a href="#tentang">Tentang</a></li>
           <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
         </ul>

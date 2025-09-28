@@ -60,7 +60,7 @@
   .info-icon {
     width: 40px;
     height: 40px;
-    background: #4c80ae;
+    background: #1b5396;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -75,29 +75,29 @@
   }
 
   .btn-primary {
-    background: #4c80ae;
-    border-color: #4c80ae;
+    background: #1b5396;
+    border-color: #1b5396;
     padding: 0.75rem 2rem;
     font-weight: 600;
     border-radius: 8px;
   }
 
   .btn-primary:hover {
-    background: #3a6790;
-    border-color: #3a6790;
+    background: #164a7a;
+    border-color: #164a7a;
   }
 
   .btn-outline-primary {
-    border-color: #4c80ae;
-    color: #4c80ae;
+    border-color: #1b5396;
+    color: #1b5396;
     padding: 0.75rem 2rem;
     font-weight: 600;
     border-radius: 8px;
   }
 
   .btn-outline-primary:hover {
-    background: #4c80ae;
-    border-color: #4c80ae;
+    background: #1b5396;
+    border-color: #1b5396;
   }
 
   .contact-info {
@@ -250,7 +250,7 @@
       <div class="col-lg-8">
         <h3 class="mb-3">Ingin Submit Properti Lainnya?</h3>
         <p class="text-muted mb-4">Daftarkan properti lainnya dengan mudah menggunakan form yang sama</p>
-        <a href="<?= base_url('tawarkan-properti') ?>" class="btn btn-primary btn-lg">
+        <a href="<?= base_url('jual-rumah') ?>" class="btn btn-primary btn-lg">
           <i class="fas fa-plus me-2"></i>Submit Properti Baru
         </a>
       </div>

@@ -10,10 +10,10 @@ $routes->get('agen', 'Home::agen');
 $routes->get('kebijakan', 'Home::kebijakan');
 $routes->get('syarat', 'Home::syarat');
 
-$routes->get('jual', 'Jual::index');
-$routes->get('jual/search', 'Jual::search');
-$routes->get('jual/get_ajax', 'Jual::get_ajax');
-$routes->get('jual/detail/(:num)', 'Jual::detail/$1');
+$routes->get('cari-rumah', 'Jual::index');
+$routes->get('cari-rumah/search', 'Jual::search');
+$routes->get('cari-rumah/get_ajax', 'Jual::get_ajax');
+$routes->get('cari-rumah/detail/(:num)', 'Jual::detail/$1');
 
 $routes->get('sewa', 'Sewa::index');
 $routes->get('sewa/search', 'Sewa::search');
@@ -25,9 +25,9 @@ $routes->get('artikel/search', 'Artikel::search');
 $routes->get('artikel/get_ajax', 'Artikel::get_ajax');
 $routes->get('artikel/(:any)', 'Artikel::detail/$1');
 
-$routes->get('tawarkan-properti', 'GuestProperty::index');
-$routes->post('tawarkan-properti/submit', 'GuestProperty::submit');
-$routes->get('tawarkan-properti/success', 'GuestProperty::success');
+$routes->get('jual-rumah', 'GuestProperty::index');
+$routes->post('jual-rumah/submit', 'GuestProperty::submit');
+$routes->get('jual-rumah/success', 'GuestProperty::success');
 
 $routes->get('login', 'Login::index');
 $routes->post('user_login', 'Login::process');

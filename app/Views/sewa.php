@@ -530,7 +530,7 @@
                   </div>
                 </div>
                 <p class="project-price">Rp <?= number_format($property['price'], 0, ',', '.') ?>/bulan</p>
-                <a href="<?= base_url('jual/detail/' . $property['id']) ?>" class="btn btn-outline-primary btn-sm w-100">
+                <a href="<?= base_url('cari-rumah/detail/' . $property['id']) ?>" class="btn btn-outline-primary btn-sm w-100">
                   Lihat Detail
                 </a>
               </div>
@@ -761,7 +761,7 @@
               </div>
             </div>
             <p class="project-price">Rp ${new Intl.NumberFormat('id-ID').format(property.price)}/bulan</p>
-            <a href="<?= base_url('jual/detail/') ?>${property.id}" class="btn btn-outline-primary btn-sm w-100">
+            <a href="<?= base_url('cari-rumah/detail/') ?>${property.id}" class="btn btn-outline-primary btn-sm w-100">
               Lihat Detail
             </a>
           </div>

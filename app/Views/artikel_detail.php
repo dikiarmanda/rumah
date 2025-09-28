@@ -15,7 +15,7 @@
 
   .article-meta .author-name {
     font-weight: 700;
-    color: #4c80ae;
+    color: #1b5396;
   }
 
   .article-meta .separator {
@@ -40,7 +40,7 @@
   }
 
   .breadcrumb-item a {
-    color: #4c80ae;
+    color: #1b5396;
     text-decoration: none;
   }
 
@@ -49,7 +49,7 @@
   }
 
   .category-badge {
-    background-color: #4c80ae !important;
+    background-color: #1b5396 !important;
     font-size: 0.8rem;
     padding: 0.4em 0.7em;
   }

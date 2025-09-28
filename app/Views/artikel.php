@@ -1,6 +1,6 @@
 <style>
   :root {
-    --primary-color: #4c80ae;
+    --primary-color: #1b5396;
     --secondary-color: #2c3e50;
     --light-blue: #f8f9fa;
     --text-dark: #2c3e50;
@@ -38,8 +38,8 @@
   }
 
   .btn-primary:hover {
-    background-color: #3d6b95;
-    border-color: #3d6b95;
+    background-color: #164a7a;
+    border-color: #164a7a;
   }
 
   .btn-outline-primary {
@@ -53,7 +53,7 @@
   }
 
   .hero-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     color: white;
     padding: 80px 0 60px;
     text-align: center;
@@ -108,7 +108,7 @@
   }
 
   .search-btn {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     border: none;
     border-radius: 10px;
     padding: 12px 30px;
@@ -186,7 +186,7 @@
 
   .article-image {
     height: 200px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     position: relative;
     display: flex;
     align-items: center;
@@ -246,7 +246,7 @@
   }
 
   .article-link:hover {
-    color: #3d6b95;
+    color: #164a7a;
     transform: translateX(5px);
   }
 
@@ -289,7 +289,7 @@
   .popular-article-image {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     border-radius: 10px;
     margin-right: 1rem;
     flex-shrink: 0;

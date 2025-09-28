@@ -1,15 +1,15 @@
 <style>
   /* .text-primary-custom {
-    color: #4c80ae !important;
+    color: #1b5396 !important;
   }
 
   .bg-primary-custom {
-    background-color: #4c80ae !important;
+    background-color: #1b5396 !important;
   }
 
   .btn-primary-custom {
-    background-color: #4c80ae;
-    border-color: #4c80ae;
+    background-color: #1b5396;
+    border-color: #1b5396;
   }
 
   .btn-primary-custom:hover {
@@ -18,7 +18,7 @@
   } */
 
   .hero-section {
-    background: linear-gradient(135deg, #4c80ae 0%, #3a6790 100%);
+    background: linear-gradient(135deg, #1b5396 0%, #2168bc 100%);
     color: #fff;
     padding: 96px 0;
     border-radius: 0 0 24px 24px;

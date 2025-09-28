@@ -82,7 +82,7 @@
   }
 
   .login-form .form-control:focus {
-    border-color: #4c80ae;
+    border-color: #1b5396;
     box-shadow: 0 0 0 0.2rem rgba(76, 128, 174, 0.25);
     background: #ffffff;
   }
@@ -93,7 +93,7 @@
   }
 
   .login-btn {
-    background: linear-gradient(135deg, #4c80ae 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, #1b5396 0%, #5a8bc0 100%);
     border: none;
     border-radius: 12px;
     padding: 1rem 2rem;
@@ -108,14 +108,14 @@
   }
 
   .login-btn:hover {
-    background: linear-gradient(135deg, #3d6b95 0%, #4c80ae 100%);
+    background: linear-gradient(135deg, #3d6b95 0%, #1b5396 100%);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(76, 128, 174, 0.4);
     color: white;
   }
 
   .forgot-password {
-    color: #4c80ae;
+    color: #1b5396;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;

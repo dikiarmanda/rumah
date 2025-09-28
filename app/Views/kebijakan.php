@@ -19,7 +19,7 @@
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #eee;
-    color: #4c80ae;
+    color: #1b5396;
   }
 
   .policy-container h3 {
@@ -44,7 +44,7 @@
   }
 
   .policy-container a {
-    color: #4c80ae;
+    color: #1b5396;
     text-decoration: none;
   }
 
@@ -58,7 +58,7 @@
 
   .notice-box {
       background-color: #f8f9fa;
-      border-left: 4px solid #4c80ae;
+      border-left: 4px solid #1b5396;
       padding: 1.5rem;
       margin-top: 1.5rem;
       border-radius: 0 8px 8px 0;

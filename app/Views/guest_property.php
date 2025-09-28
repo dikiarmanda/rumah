@@ -1,6 +1,6 @@
 <style>
   .hero-section {
-    background: linear-gradient(135deg, #4c80ae 0%, #3a6790 100%);
+    background: linear-gradient(135deg, #1b5396 0%, #164a7a 100%);
     color: #fff;
     padding: 60px 0;
     border-radius: 0 0 24px 24px;
@@ -41,7 +41,7 @@
   }
 
   .step.active .step-number {
-    background: #4c80ae;
+    background: #1b5396;
     color: #fff;
   }
 
@@ -75,7 +75,7 @@
 
   .form-control:focus,
   .form-select:focus {
-    border-color: #4c80ae;
+    border-color: #1b5396;
     box-shadow: 0 0 0 3px rgba(76, 128, 174, 0.1);
   }
 
@@ -97,7 +97,7 @@
   }
 
   .facility-item:hover {
-    border-color: #4c80ae;
+    border-color: #1b5396;
     background: #f8fafc;
   }
 
@@ -115,7 +115,7 @@
   }
 
   .image-upload-area:hover {
-    border-color: #4c80ae;
+    border-color: #1b5396;
     background: #f0f9ff;
   }
 
@@ -155,29 +155,29 @@
   }
 
   .btn-primary {
-    background: #4c80ae;
-    border-color: #4c80ae;
+    background: #1b5396;
+    border-color: #1b5396;
     padding: 0.75rem 2rem;
     font-weight: 600;
     border-radius: 8px;
   }
 
   .btn-primary:hover {
-    background: #3a6790;
-    border-color: #3a6790;
+    background: #164a7a;
+    border-color: #164a7a;
   }
 
   .btn-outline-primary {
-    border-color: #4c80ae;
-    color: #4c80ae;
+    border-color: #1b5396;
+    color: #1b5396;
     padding: 0.75rem 2rem;
     font-weight: 600;
     border-radius: 8px;
   }
 
   .btn-outline-primary:hover {
-    background: #4c80ae;
-    border-color: #4c80ae;
+    background: #1b5396;
+    border-color: #1b5396;
   }
 
   .section-title {
@@ -297,7 +297,7 @@
             </div>
           <?php endif; ?>
 
-          <form action="<?= base_url('tawarkan-properti/submit') ?>" method="post" enctype="multipart/form-data"
+          <form action="<?= base_url('jual-rumah/submit') ?>" method="post" enctype="multipart/form-data"
             id="propertyForm">
             <?= csrf_field() ?>
 

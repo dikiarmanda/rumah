@@ -1,6 +1,6 @@
 <style>
   :root {
-    --primary-color: #4c80ae;
+    --primary-color: #1b5396;
     --secondary-color: #2c3e50;
     --light-blue: #f8f9fa;
     --text-dark: #2c3e50;
@@ -38,8 +38,8 @@
   }
 
   .btn-primary:hover {
-    background-color: #3d6b95;
-    border-color: #3d6b95;
+    background-color: #164a7a;
+    border-color: #164a7a;
   }
 
   .btn-outline-primary {
@@ -53,7 +53,7 @@
   }
 
   .hero-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     color: white;
     padding: 80px 0 60px;
     text-align: center;
@@ -105,7 +105,7 @@
   }
 
   .search-btn {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     border: none;
     border-radius: 10px;
     padding: 12px 30px;
@@ -308,7 +308,7 @@
 
   .article-image {
     height: 200px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2168bc 100%);
     position: relative;
     display: flex;
     align-items: center;
@@ -368,7 +368,7 @@
   }
 
   .article-link:hover {
-    color: #3d6b95;
+    color: #164a7a;
     transform: translateX(5px);
   }
 
@@ -418,7 +418,7 @@
 <!-- Search Form -->
 <div class="container">
   <div class="search-card">
-    <form method="GET" action="<?= base_url('jual/search') ?>">
+    <form method="GET" action="<?= base_url('cari-rumah/search') ?>">
       <div class="row g-3 align-items-start">
         <div class="col-lg-10">
           <div class="row g-3">
@@ -499,7 +499,7 @@
         </p>
       </div>
       <?php if (!isset($search_results)): ?>
-        <a href="<?= base_url('jual/search') ?>" class="btn btn-dark">Lihat Semua</a>
+        <a href="<?= base_url('cari-rumah/search') ?>" class="btn btn-dark">Lihat Semua</a>
       <?php endif; ?>
     </div>
 
@@ -550,7 +550,7 @@
                   </div>
                 </div>
                 <p class="project-price">Rp <?= number_format($property['price'], 0, ',', '.') ?></p>
-                <a href="<?= base_url('jual/detail/' . $property['id']) ?>" class="btn btn-outline-primary btn-sm w-100">
+                <a href="<?= base_url('cari-rumah/detail/' . $property['id']) ?>" class="btn btn-outline-primary btn-sm w-100">
                   Lihat Detail
                 </a>
               </div>
@@ -563,17 +563,17 @@
             <ul class="pagination">
               <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                 <a class="page-link"
-                  href="<?= base_url('jual/get_ajax') . (($page - 1) > 0 ? '?page=' . ($page - 1) : '') ?>"
+                  href="<?= base_url('cari-rumah/get_ajax') . (($page - 1) > 0 ? '?page=' . ($page - 1) : '') ?>"
                   tabindex="-1">Previous</a>
               </li>
               <?php for ($i = 1; $i <= ceil(count($properties) / 12); $i++): ?>
                 <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-                  <a class="page-link" href="<?= base_url('jual/get_ajax') . ($i > 1 ? '?page=' . $i : '') ?>"><?= $i ?></a>
+                  <a class="page-link" href="<?= base_url('cari-rumah/get_ajax') . ($i > 1 ? '?page=' . $i : '') ?>"><?= $i ?></a>
                 </li>
               <?php endfor ?>
               <li class="page-item <?= $page == ceil(count($properties) / 12) ? 'disabled' : '' ?>">
                 <a class="page-link"
-                  href="<?= base_url('jual/get_ajax') . (($page + 1) > ceil(count($properties) / 12) ? '' : '?page=' . ($page + 1)) ?>">Next</a>
+                  href="<?= base_url('cari-rumah/get_ajax') . (($page + 1) > ceil(count($properties) / 12) ? '' : '?page=' . ($page + 1)) ?>">Next</a>
               </li>
             </ul>
           </nav>
@@ -584,7 +584,7 @@
             <i class="fas fa-search fa-3x text-muted mb-3"></i>
             <h4 class="text-muted">Tidak ada properti ditemukan</h4>
             <p class="text-muted">Coba ubah kriteria pencarian Anda</p>
-            <a href="<?= base_url('jual') ?>" class="btn btn-primary">Lihat Semua Properti</a>
+            <a href="<?= base_url('cari-rumah') ?>" class="btn btn-primary">Lihat Semua Properti</a>
           </div>
         </div>
       <?php endif ?>
@@ -622,7 +622,7 @@
                     style="width: 100%; height: 200px; object-fit: cover;">
                 <?php else: ?>
                   <div
-                    style="width: 100%; height: 200px; background: linear-gradient(135deg, #4c80ae 0%, #5a8bc0 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                    style="width: 100%; height: 200px; background: linear-gradient(135deg, #4c80ae 0%, #2168bc 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
                     <i class="fas fa-newspaper"></i>
                   </div>
                 <?php endif; ?>
@@ -729,7 +729,7 @@
     }
     params.append('page', currentPage);
 
-    fetch(`<?= base_url('jual/get_ajax') ?>?${params.toString()}`)
+    fetch(`<?= base_url('cari-rumah/get_ajax') ?>?${params.toString()}`)
       .then(response => response.json())
       .then(data => {
         if (data.success && data.data.length > 0) {
@@ -802,7 +802,7 @@
               </div>
             </div>
             <p class="project-price">Rp ${new Intl.NumberFormat('id-ID').format(property.price)}</p>
-            <a href="<?= base_url('jual/detail/') ?>${property.id}" class="btn btn-outline-primary btn-sm w-100">
+            <a href="<?= base_url('cari-rumah/detail/') ?>${property.id}" class="btn btn-outline-primary btn-sm w-100">
               Lihat Detail
             </a>
           </div>

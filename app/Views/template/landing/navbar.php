@@ -23,16 +23,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav fw-medium me-auto mb-2 mb-lg-0" id="navbar-menu">
         <li class="nav-item me-2">
-          <a class="nav-link" href="<?= base_url('jual') ?>">Jual</a>
+          <a class="nav-link" href="<?= base_url('cari-rumah') ?>">Cari Rumah</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link" href="<?= base_url('jual-rumah') ?>">Jual Rumah</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link" href="<?= base_url('agen') ?>">Agent</a>
         </li>
         <li class="nav-item me-2">
           <a class="nav-link" href="<?= base_url('sewa') ?>">Sewa</a>
-        </li>
-        <li class="nav-item me-2">
-          <a class="nav-link" href="<?= base_url('agen') ?>">Agen</a>
-        </li>
-        <li class="nav-item me-2">
-          <a class="nav-link" href="<?= base_url('tawarkan-properti') ?>">Tawarkan Properti Anda</a>
         </li>
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">

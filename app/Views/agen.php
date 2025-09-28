@@ -1,6 +1,6 @@
 <style>
   .hero-section {
-    background: linear-gradient(135deg, #4c80ae 0%, #5a8bc0 100%);
+    background: linear-gradient(135deg, #1b5396 0%, #2168bc 100%);
     color: white;
     padding: 80px 0 60px;
     text-align: center;
@@ -31,7 +31,7 @@
   }
 
   .agent-card .card-header {
-    background-color: #4c80ae;
+    background-color: #1b5396;
     color: white;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
@@ -72,7 +72,7 @@
     display: block;
     font-weight: 700;
     font-size: 1.2rem;
-    color: #4c80ae;
+    color: #1b5396;
   }
 
   .btn-whatsapp {
