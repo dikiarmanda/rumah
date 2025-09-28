@@ -78,9 +78,11 @@ class User extends BaseController
     try {
       $this->userModel->insert($data);
       $id = $this->userModel->getInsertID();
-      $slugName = url_title($name, '-', true);
-      $uploaded = uploadUserPhoto($photo, $slugName);
-      $this->userModel->update($id, ['photo' => $uploaded]);
+      if ($photo->isValid()) {
+        $slugName = url_title($name, '-', true);
+        $uploaded = uploadUserPhoto($photo, $slugName);
+        $this->userModel->update($id, ['photo' => $uploaded]);
+      }
 
       session()->setFlashdata([
         'title' => 'Berhasil',
@@ -170,9 +172,11 @@ class User extends BaseController
         'id' => $id
       ]);
 
-      $slugName = url_title($name, '-', true);
-      $uploaded = uploadUserPhoto($photo, $slugName);
-      $this->userModel->update($id, ['photo' => $uploaded]);
+      if ($photo->isValid()) {
+        $slugName = url_title($name, '-', true);
+        $uploaded = uploadUserPhoto($photo, $slugName);
+        $this->userModel->update($id, ['photo' => $uploaded]);
+      }
 
       session()->setFlashdata([
         'title' => 'Berhasil',
