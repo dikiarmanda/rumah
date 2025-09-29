@@ -65,8 +65,6 @@
 
 <?= $this->section('js') ?>
 <script>
-  $('.favorite').css('cursor', 'pointer');
-
   let data = {};
 
   let status = $('#status').find('option:selected').val();
@@ -198,7 +196,7 @@
           ${row.publish == 1 ? 'Publikasi' : 'Draft'}</span>
       </td>`;
       if (role != 'agen') {
-        html += `<td>
+        html += `<td class="text-center fs-4 favorite" data-id="<?= $row['id'] ?>" style="cursor: pointer;">
           <i class="${row.favorite == 1 ? 'fa-solid' : 'fa-regular'} fa-star text-warning"></i>
         </td>`;
       }

@@ -25,8 +25,8 @@ class User extends BaseController
       ->findAll();
 
     $data = [
-      'title' => 'Kelola User',
-      'subtitle' => 'Data user yang terdaftar di dalam sistem.',
+      'title' => 'Kelola Agen',
+      'subtitle' => 'Data agen dan admin yang terdaftar di dalam sistem.',
       'data' => $users,
       'provinsi' => $this->wilayahModel->where('level', 'provinsi')->findAll(),
       'kota' => $this->wilayahModel->where('level', 'kabupaten')->findAll(),

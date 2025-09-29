@@ -211,7 +211,7 @@
     const id = $(this).data('id');
     const name = $(this).data('name');
     Swal.fire({
-      title: 'Non Aktifkan User',
+      title: 'Non Aktifkan Agen',
       text: 'Apakah Anda yakin ingin menonaktifkan ' + name + ' ?',
       icon: 'warning',
       showCancelButton: true,
@@ -314,7 +314,7 @@
 
   handleModalClick({
     selector: '.btn-modal',
-    modalTitle: 'User',
+    modalTitle: 'Agen',
     formActionUrl: id => '<?= base_url('dashboard/user/') ?>' + (id ? 'update/' : 'store'),
     findData: id => data.find(item => item.id == id),
     defaultValues: {
