@@ -49,7 +49,7 @@
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('dashboard/user') ?>" data-page="user">
           <i class="fa-solid fa-users menu-icon"></i>
-          <span class="menu-title">User</span>
+          <span class="menu-title">Agen</span>
         </a>
       </li>
       <li class="nav-item">

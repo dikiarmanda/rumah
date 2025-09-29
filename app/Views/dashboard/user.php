@@ -66,9 +66,9 @@
         <h5 class="modal-title fw-semibold" id="myModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" enctype="multipart/form-data">
-        <?= csrf_field() ?>
-        <div class="modal-body">
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data">
+          <?= csrf_field() ?>
           <div class="form-group text-center">
             <label for="photo" style="cursor: pointer;">
               <img src="<?= base_url('public/uploads/users/default.png') ?>" alt="profile"
@@ -175,13 +175,13 @@
               <button type="button" class="btn btn-danger btn-sm btn-icon-text" id="btn-reset-password">
                 <i class="fa-solid fa-unlock btn-icon-prepend"></i> Reset Password</button>
             </div>
+            <div class="col-12 text-end">
+              <button type="button" class="btn btn-inverse-secondary" data-bs-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-primary" id="submitBtn">Simpan</button>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-inverse-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary" id="submitBtn">Simpan</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>
