@@ -59,7 +59,7 @@ class Artikel extends BaseController
             'subtitle' => 'Kelola artikel Anda di Sini.',
             'data' => $id != null ? $this->articleModel->getArticleById($id) : [],
             'categories' => $this->articleModel->getAllCategories(),
-            'action' => base_url('dashboard/artikel/' . ($id != null ? 'update' : 'store')),
+            'action' => base_url('dashboard/artikel/' . ($id != null ? 'update/' . $id : 'store')),
         ];
         return $this->template->display('dashboard/artikel/detail', $data);
     }

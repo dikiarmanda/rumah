@@ -7,18 +7,18 @@
 
 <div class="card">
   <div class="card-body">
-    <form action="<?= $action . ($data['id'] ?? '') ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= $action ?>" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="title">Judul</label>
+            <label for="title">Judul <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="title" name="title"
               value="<?= old('title', $data['title'] ?? '') ?>" required>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="category">Kategori</label>
+            <label for="category">Kategori <span class="text-danger">*</span></label>
             <input type="text" class="form-control typeahead" id="category" name="category"
               value="<?= old('category', $data['category'] ?? '') ?>" required>
           </div>
@@ -30,8 +30,8 @@
         </div>
         <div class="col-12 mt-5">
           <div class="form-group">
-            <label for="thumbnail">Thumbnail</label>
-            <input type="file" class="dropify" id="thumbnail" name="thumbnail"
+            <label for="thumbnail">Thumbnail <span class="text-danger">*</span></label>
+            <input type="file" class="dropify" id="thumbnail" name="thumbnail" required
               data-allowed-file-extensions="jpg jpeg png" data-max-file-size="3M" <?= isset($data['thumbnail']) ? 'data-default-file="' . base_url($data['thumbnail']) . '"' : '' ?>>
           </div>
         </div>
