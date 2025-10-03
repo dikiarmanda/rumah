@@ -168,12 +168,13 @@ class Artikel extends BaseController
                 'icon' => 'error',
                 'text' => 'Gagal menghapus artikel',
             ];
+        } else {
+            $res = [
+                'title' => 'Gagal',
+                'icon' => 'error',
+                'text' => 'Artikel tidak ditemukan',
+            ];
         }
-        $res = [
-            'title' => 'Gagal',
-            'icon' => 'error',
-            'text' => 'Artikel tidak ditemukan',
-        ];
         return $this->response->setJSON($res);
     }
 }

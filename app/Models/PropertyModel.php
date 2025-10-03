@@ -34,7 +34,7 @@ class PropertyModel extends Model
   protected $createdField = 'created_at';
   protected $updatedField = 'updated_at';
 
-  public function getData($agent_id = null, $status = null, $kategori = null)
+  public function getData($agent_id = null, $status = null, $kategori = null, $all = false)
   {
     $builder = $this->db->table($this->table . ' p');
     $builder->select('p.*, c.name AS kategori, t.status AS transaksi,
@@ -42,7 +42,9 @@ class PropertyModel extends Model
     $builder->join('transactions t', 'p.id = t.property_id', 'left');
     $builder->join('categories c', 'p.type = c.id', 'left');
     $builder->join('favorites f', 'p.id = f.property_id', 'left');
-    $builder->where("(t.status != 'Valid' OR t.status IS NULL)");
+    if (!$all) {
+      $builder->where("(t.status != 'Valid' OR t.status IS NULL)");
+    }
     if ($agent_id != null) {
       $builder->join('agents a', 'p.id = a.property_id');
       $builder->where('a.agent_id', $agent_id);

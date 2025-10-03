@@ -30,7 +30,7 @@ class Transaksi extends BaseController
             'title' => 'Daftar Transaksi',
             'subtitle' => 'Kelola semua daftar transaksi Anda di Sini.',
             'transaksi' => $this->transactionModel->getData($agen_id),
-            'data' => $this->propertyModel->getData($agen_id),
+            'data' => $this->propertyModel->getData($agen_id, null, null, true),
             'kategori' => $this->categoryModel
                 ->where('status', 'aktif')
                 ->orderBy('name', 'ASC')
@@ -127,6 +127,7 @@ class Transaksi extends BaseController
         $wa_buyer = $this->request->getPost('wa_buyer');
         $tanggal_penjualan = $this->request->getPost('tanggal_penjualan');
         $tanggal_serah_terima = $this->request->getPost('tanggal_serah_terima');
+        $status = $this->request->getPost('status');
 
         $data = [
             'property_id' => $property_id,
@@ -134,6 +135,7 @@ class Transaksi extends BaseController
             'price' => $price,
             'buyer' => $buyer,
             'wa_buyer' => $wa_buyer,
+            'status' => $status,
             'tanggal_penjualan' => $tanggal_penjualan,
             'tanggal_serah_terima' => $tanggal_serah_terima,
         ];

@@ -19,10 +19,7 @@ class User extends BaseController
 
   public function index()
   {
-    $users = $this->userModel
-      ->orderBy('status', 'ASC')
-      ->orderBy('name', 'ASC')
-      ->findAll();
+    $users = $this->userModel->getData();
 
     $data = [
       'title' => 'Kelola Agen',

@@ -148,6 +148,7 @@ class Properti extends BaseController
             'floors' => $floors,
             'facilities' => $facilities,
             'description' => $description,
+            'publish' => 1,
         ];
 
         if (session()->get('role') == 'agen') {
@@ -174,29 +175,12 @@ class Properti extends BaseController
         }
 
         try {
-            $result = $this->propertyModel->insert($data);
-            if ($result) {
-                $id = $this->propertyModel->insertID();
-            } else {
-                throw new \Exception("Gagal menyimpan data properti.");
-            }
-
-            foreach ($agen as $user) {
-                $tempAgen = $this->agentModel->where('agent_id', $user)->where('property_id', $id)->first();
-                $tempAgen != null ? $this->agentModel->update($tempAgen['id'], ['agent_id' => $user, 'property_id' => $id]) : $this->agentModel->insert(['agent_id' => $user, 'property_id' => $id]);
-            }
+            $this->propertyModel->insert($data);
+            $id = $this->propertyModel->insertID();
+            $this->saveAgent($id, $agen);
 
             $fileName = $this->request->getPost('tipe');
-            $uploaded = uploadPropertyImages($images, $id, $fileName);
-
-            // contoh simpan ke DB
-            foreach ($uploaded as $key => $imgUrl) {
-                $this->propertyImageModel->insert([
-                    'property_id' => $id,
-                    'image_url' => $imgUrl,
-                    'is_primary' => $key == 0 ? 1 : 0,
-                ]);
-            }
+            $this->saveImages($id, $fileName, $images);
 
             session()->setFlashdata([
                 'title' => 'Berhasil',
@@ -319,23 +303,10 @@ class Properti extends BaseController
 
         try {
             $this->propertyModel->update($id, $data);
-
-            foreach ($agen as $user) {
-                $tempAgen = $this->agentModel->where('agent_id', $user)->where('property_id', $id)->first();
-                $tempAgen != null ? $this->agentModel->update($tempAgen['id'], ['agent_id' => $user, 'property_id' => $id]) : $this->agentModel->insert(['agent_id' => $user, 'property_id' => $id]);
-            }
+            $this->saveAgent($id, $agen);
 
             $fileName = $this->request->getPost('tipe');
-            $uploaded = uploadPropertyImages($images, $id, $fileName);
-
-            // simpan gambar ke DB
-            foreach ($uploaded as $key => $imgUrl) {
-                $this->propertyImageModel->insert([
-                    'property_id' => $id,
-                    'image_url' => $imgUrl,
-                    'is_primary' => $key == 0 ? 1 : 0,
-                ]);
-            }
+            $this->saveImages($id, $fileName, $images);
 
             session()->setFlashdata([
                 'title' => 'Berhasil',
@@ -415,5 +386,33 @@ class Properti extends BaseController
             'icon' => 'success',
             'text' => 'Properti berhasil dihapus'
         ]);
+    }
+
+    public function saveAgent($property_id, $agen)
+    {
+        if (!empty($agen)) {
+            foreach ($agen as $user) {
+                $tempAgen = $this->agentModel->where('agent_id', $user)->where('property_id', $property_id)->first();
+                $tempAgen != null ? $this->agentModel->update($tempAgen['id'], ['agent_id' => $user, 'property_id' => $property_id]) : $this->agentModel->insert(['agent_id' => $user, 'property_id' => $property_id]);
+            }
+        }
+    }
+
+    public function saveImages($property_id, $fileName, $images)
+    {
+        if ($images->isValid()) {
+            $uploaded = uploadPropertyImages($images, $property_id, $fileName);
+        }
+
+        // simpan gambar ke DB
+        if (isset($uploaded) && !empty($uploaded)) {
+            foreach ($uploaded as $key => $imgUrl) {
+                $this->propertyImageModel->insert([
+                    'property_id' => $property_id,
+                    'image_url' => $imgUrl,
+                    'is_primary' => $key == 0 ? 1 : 0,
+                ]);
+            }
+        }
     }
 }

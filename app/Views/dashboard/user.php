@@ -20,6 +20,7 @@
             <th>Nama</th>
             <th>Email</th>
             <th>Whatsapp</th>
+            <th>Properti Yang Dikelola</th>
             <th>Role</th>
             <th>Status</th>
             <th class="text-center">Aksi</th>
@@ -33,6 +34,7 @@
               <td><?= $row['name'] ?></td>
               <td><?= $row['email'] ?></td>
               <td><?= $row['phone'] ?></td>
+              <td><?= number_format($row['property'], 0, ',', '.') ?></td>
               <td><?= ucfirst($row['role']) ?></td>
               <td>
                 <span class="badge badge-<?= $row['status'] == 'aktif' ? 'success' : 'danger' ?>">

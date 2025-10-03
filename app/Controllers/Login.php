@@ -23,8 +23,9 @@ class Login extends BaseController
         $email = htmlspecialchars($this->request->getPost('email'));
         $password = htmlspecialchars($this->request->getPost('password'));
         $user = $this->UserModel->where('email', $email)->first();
+        $isActive = $user['status'] == 'aktif';
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && $isActive && password_verify($password, $user['password'])) {
             $session_data = [
                 'id' => $user['id'],
                 'name' => $user['name'],

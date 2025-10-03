@@ -3,11 +3,13 @@
     <h3><?= $title ?></h3>
     <p class="text-muted"><?= $subtitle ?></p>
   </div>
-  <div class="col text-end">
-    <a href="<?= base_url('dashboard/properti/create') ?>" class="btn btn-primary" target="_blank">
-      <i class="fas fa-plus"></i> Tambah Data
-    </a>
-  </div>
+  <?php if (session('role') != 'agen'): ?>
+    <div class="col text-end">
+      <a href="<?= base_url('dashboard/properti/create') ?>" class="btn btn-primary" target="_blank">
+        <i class="fas fa-plus"></i> Tambah Data
+      </a>
+    </div>
+  <?php endif ?>
 </div>
 
 <div class="card">
@@ -61,7 +63,39 @@
   </div>
 </div>
 
-<?= $this->include('dashboard/properti/modal_sell') ?>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" method="post">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="property_id">Properti</label>
+                <select class="form-select modal-select" name="property_id" id="property_id">
+                  <option value="">Pilih Properti</option>
+                  <?php foreach ($data as $property): ?>
+                    <option value="<?= $property['id'] ?>"><?= $property['title'] ?></option>
+                  <?php endforeach ?>
+                </select>
+              </div>
+              <div class="table-responsive" id="property-details"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <?= $this->section('js') ?>
 <script>
@@ -198,21 +232,20 @@
       if (role != 'agen') {
         html += `<td class="text-center fs-4 favorite" data-id="<?= $row['id'] ?>" style="cursor: pointer;">
           <i class="${row.favorite == 1 ? 'fa-solid' : 'fa-regular'} fa-star text-warning"></i>
-        </td>`;
-      }
-
-      html += `<td class="d-flex text-center gap-1">
-        <a href="<?= base_url('dashboard/properti/') ?>${row.id}" class="btn btn-light btn-sm">
-          <i class="fas fa-edit"></i>
-        </a>`;
-
-      if (role != 'agen' && row.agen != '') {
-        html += `<button type="button" class="btn btn-${row.publish == 0 ? 'success' : 'danger'} btn-sm btn-disable"
-          data-id="${row.id}" data-value="${row.publish}" ><i class="fas fa-eye${row.publish == 0 ? '' : '-slash'}"></i>
-          </button>`;
-      } else if (role == 'agen') {
-        html += `<button type="button" class="btn btn-info btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#myModal"
-          data-id="${row.id}" ><i class="fas fa-dollar"></i>
+        </td>
+        <td class="d-flex text-center gap-1">
+          <a href="<?= base_url('dashboard/properti/') ?>${row.id}" class="btn btn-light btn-sm">
+            <i class="fas fa-edit"></i>
+          </a>`;
+        if (row.agen != '') {
+          html += `<button type="button" class="btn btn-${row.publish == 0 ? 'success' : 'danger'} btn-sm btn-disable"
+            data-id="${row.id}" data-value="${row.publish}" ><i class="fas fa-eye${row.publish == 0 ? '' : '-slash'}"></i>
+            </button>`;
+        }
+      } else {
+        html += `<td class="d-flex text-center gap-1">
+          <button type="button" class="btn btn-info btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#myModal"
+            data-id="${row.id}" ><i class="fas fa-dollar"></i>
           </button>`
       }
       html += `</td></tr>`;
@@ -223,5 +256,101 @@
     $('#fetch-data').html(html);
     tableInit('#basic-table');
   }
+
+  let agens = <?= json_encode($agens) ?>;
+
+  handleModalClick({
+    selector: '.btn-modal',
+    modalTitle: 'Transaksi',
+    formActionUrl: id => '<?= base_url('dashboard/transaksi/') ?>' + (id ? 'update/' : 'store'),
+    findData: id => data.find(item => item.id == id),
+    defaultValues: {
+      property_id: '',
+    },
+    fieldMap: {
+      inputs: [{
+      },],
+      selects: [{
+        name: 'property_id',
+        valueKey: 'id',
+      },],
+    }
+  });
+
+  $(document).on('change', '#property_id', function (e) {
+    e.preventDefault();
+    let id = $(this).find('option:selected').val();
+    let res = data.find(e => e.id == id);
+
+    if (res != undefined) {
+      let html = `
+      <table class="table table-bordered">
+        <tr>
+          <th class="fit-column">Iklan Properti</th>
+          <td>${res.title}</td>
+        </tr>
+        <tr>
+          <th>Kategori</th>
+          <td>${res.kategori}</td>
+        </tr>
+        <tr>
+          <th>Harga</th>
+          <td>${shortNumber(res.price)}</td>
+        </tr>
+        <tr>
+          <th>Provinsi</th>
+          <td>${res.province}</td>
+        </tr>
+        <tr>
+          <th>Kota</th>
+          <td>${res.city}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td class="text-capitalize">${res.status}</td>
+        </tr>
+        <tr>
+          <th>Agen</th>
+          <td>
+            <select class="form-select modal-select" id="agent_id" name="agent_id">`;
+
+      if (role == 'agen') {
+        html += `<option value="<?= session('id') ?>" selected="selected"><?= session('name') ?></option>`;
+      } else {
+        $.each(agens, function (i, agen) {
+          html += `<option value="${agen.id}">${agen.name}</option>`;
+        })
+      }
+
+      html += `</select>
+          </td>
+        </tr>
+        <tr>
+          <th>Pembeli</th>
+          <td><input type="text" name="buyer" class="form-control" required></td>
+        </tr>
+        <tr>
+          <th>Whatsapp Pembeli</th>
+          <td><input type="text" name="wa_buyer" class="form-control" required></td>
+        </tr>
+        <tr>
+          <th>UTJ</th>
+          <td><input type="text" name="price" class="form-control currency" required></td>
+        </tr>
+        <input type="hidden" name="status" value="${res.status}">
+        <tr>
+          <th>Tanggal Pembelian</th>
+          <td><input type="date" name="tanggal_penjualan" class="form-control" required></td>
+        </tr>
+        <tr>
+          <th>Tanggal Serah Terima</th>
+          <td><input type="date" name="tanggal_serah_terima" class="form-control" required></td>
+        </tr>
+      </table>
+      `;
+
+      $('#property-details').html(html);
+    }
+  });
 </script>
 <?= $this->endSection() ?>

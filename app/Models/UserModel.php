@@ -28,6 +28,30 @@ class UserModel extends Model
   protected $createdField = 'created_at';
   protected $updatedField = 'updated_at';
 
+  public function getData()
+  {
+    $builder = $this->db->table($this->table . ' u');
+    $builder->select('u.*');
+    $builder->orderBy('u.status', 'ASC');
+    $builder->orderBy('u.role', 'DESC');
+    $builder->orderBy('u.name', 'ASC');
+    $query = $builder->get();
+    $data = $query->getResultArray();
+
+    foreach ($data as $key => $i) {
+      $builder = $this->db->table('agents a');
+      $builder->select('COUNT(a.id) AS property');
+      $builder->join('properties p', 'a.property_id = p.id', 'left');
+      $builder->where('a.agent_id', $i['id']);
+      $builder->whereIn('p.status', ['dijual', 'disewakan']);
+      $query = $builder->get();
+      $temp = $query->getRowArray();
+      $data[$key]['property'] = $temp['property'] ?? 0;
+    }
+
+    return $data;
+  }
+  
   public function getAgents($id = null)
   {
     $builder = $this->db->table($this->table . ' u');
