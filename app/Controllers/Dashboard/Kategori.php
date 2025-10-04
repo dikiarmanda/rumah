@@ -47,7 +47,7 @@ class Kategori extends BaseController
       return $this->response->setJSON([
         'title' => 'Gagal',
         'icon' => 'Validasi gagal',
-        'text' => $validation->getErrors()
+        'text' => implode(', ', $validation->getErrors())
       ]);
     }
 
@@ -107,11 +107,11 @@ class Kategori extends BaseController
 
     if (!$validation->withRequest($this->request)->run()) {
       session()->setFlashdata([
-        'title' => 'Validasi gagal',
-        'icon' => 'error',
-        'text' => 'Validasi gagal',
+        'title' => 'Gagal',
+        'icon' => 'Validasi gagal',
+        'text' => implode(', ', $validation->getErrors())
       ]);
-      return redirect()->to(base_url('dashboard/kategori'));
+      return redirect()->back()->withInput();
     }
 
     try {

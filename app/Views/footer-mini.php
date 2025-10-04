@@ -1,3 +1,14 @@
+<style>
+  .footer-mini a {
+    color: #cbd5e1;
+    text-decoration: none;
+  }
+
+  .footer-mini a:hover {
+    text-decoration: underline;
+  }
+</style>
+
 <section class="pt-5 pb-4 bg-dark text-white footer-mini">
   <div class="container">
     <div class="row g-4">
@@ -19,6 +30,7 @@
           <li><a href="<?= base_url('sewa') ?>">Sewa Rumah</a></li>
           <li><a href="#tentang">Tentang</a></li>
           <li><a href="<?= base_url('artikel') ?>">Artikel</a></li>
+          <li><a href="<?= base_url('kpr') ?>">Simulasi KPR</a></li>
         </ul>
       </div>
       <div class="col-lg-4">

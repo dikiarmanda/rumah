@@ -1,22 +1,4 @@
 <style>
-  /* .text-primary-custom {
-    color: #1b5396 !important;
-  }
-
-  .bg-primary-custom {
-    background-color: #1b5396 !important;
-  }
-
-  .btn-primary-custom {
-    background-color: #1b5396;
-    border-color: #1b5396;
-  }
-
-  .btn-primary-custom:hover {
-    background-color: #3a6790;
-    border-color: #3a6790;
-  } */
-
   .hero-section {
     background: linear-gradient(135deg, #1b5396 0%, #2168bc 100%);
     color: #fff;
@@ -44,15 +26,6 @@
 
   .section-subtitle {
     color: #64748b;
-  }
-
-  .footer-mini a {
-    color: #cbd5e1;
-    text-decoration: none;
-  }
-
-  .footer-mini a:hover {
-    text-decoration: underline;
   }
 
   @media (min-width: 992px) {

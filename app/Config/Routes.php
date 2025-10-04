@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('agen', 'Home::agen');
+$routes->get('kpr', 'Home::kpr');
 $routes->get('kebijakan', 'Home::kebijakan');
 $routes->get('syarat', 'Home::syarat');
 

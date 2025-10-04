@@ -43,9 +43,9 @@ class Setting extends BaseController
             session()->setFlashdata([
                 'title' => 'Validasi Gagal',
                 'icon' => 'error',
-                'text' => $this->validator->getErrors(),
+                'text' => implode(', ', array_values($this->validator->getErrors())),
             ]);
-            return redirect()->to(base_url('dashboard/setting'));
+            return redirect()->back()->withInput();
         }
 
         $name = $this->request->getPost('name');
@@ -90,9 +90,9 @@ class Setting extends BaseController
             session()->setFlashdata([
                 'title' => 'Validasi Gagal',
                 'icon' => 'error',
-                'text' => implode("\n", array_values($this->validator->getErrors())),
+                'text' => implode(", ", array_values($this->validator->getErrors())),
             ]);
-            return redirect()->to(base_url('dashboard/setting'));
+            return redirect()->back()->withInput();
         }
 
         $user = $this->userModel->find($id);

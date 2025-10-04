@@ -75,7 +75,7 @@ class Transaksi extends BaseController
             'tanggal_penjualan' => $tanggal_penjualan,
             'tanggal_serah_terima' => $tanggal_serah_terima,
         ];
-        
+
         $validation = \Config\Services::validation();
         $validation->setRules([
             'property_id' => 'required|numeric',
@@ -90,9 +90,9 @@ class Transaksi extends BaseController
             session()->setFlashdata([
                 'title' => 'Gagal',
                 'icon' => 'Validasi gagal',
-                'text' => implode('<br>', array_values($validation->getErrors()))
+                'text' => implode(', ', $validation->getErrors())
             ]);
-            return redirect()->to(base_url('dashboard/transaksi'));
+            return redirect()->back()->withInput();
         }
 
         try {
@@ -151,11 +151,12 @@ class Transaksi extends BaseController
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
-            return $this->response->setJSON([
+            session()->setFlashdata([
                 'title' => 'Gagal',
                 'icon' => 'Validasi gagal',
-                'text' => $validation->getErrors()
+                'text' => implode(', ', $validation->getErrors())
             ]);
+            return redirect()->back()->withInput();
         }
 
         try {

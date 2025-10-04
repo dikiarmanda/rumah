@@ -48,6 +48,14 @@ class Home extends BaseController
         return $this->template->displayLanding('agen', $data);
     }
 
+    public function kpr()
+    {
+        $data = [
+            'contact' => $this->contactModel->getData(),
+        ];
+        return $this->template->displayLanding('kpr', $data);
+    }
+
     public function kebijakan()
     {
         return $this->template->displayLanding('kebijakan');

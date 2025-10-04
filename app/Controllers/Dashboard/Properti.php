@@ -167,11 +167,12 @@ class Properti extends BaseController
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
-            return $this->response->setJSON([
+            session()->setFlashdata([
                 'title' => 'Gagal',
                 'icon' => 'Validasi gagal',
-                'text' => $validation->getErrors()
+                'text' => implode(', ', $validation->getErrors())
             ]);
+            return redirect()->back()->withInput();
         }
 
         try {
@@ -294,11 +295,12 @@ class Properti extends BaseController
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
-            return $this->response->setJSON([
+            session()->setFlashdata([
                 'title' => 'Gagal',
                 'icon' => 'Validasi gagal',
-                'text' => $validation->getErrors()
+                'text' => implode(', ', $validation->getErrors())
             ]);
+            return redirect()->back()->withInput();
         }
 
         try {

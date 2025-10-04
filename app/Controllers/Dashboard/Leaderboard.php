@@ -44,7 +44,7 @@ class Leaderboard extends BaseController
       session()->setFlashdata([
         'title' => 'Validasi Gagal',
         'icon' => 'error',
-        'text' => $validation->getErrors()
+        'text' => implode(', ', $validation->getErrors())
       ])->setStatusCode(400);
       return redirect()->to('dashboard/leaderboard');
     }
@@ -103,7 +103,7 @@ class Leaderboard extends BaseController
       session()->setFlashdata([
         'title' => 'Validasi Gagal',
         'icon' => 'error',
-        'text' => $validation->getErrors()
+        'text' => implode(', ', $validation->getErrors())
       ]);
       return redirect()->to('dashboard/leaderboard');
     }
