@@ -169,7 +169,7 @@ class Properti extends BaseController
         if (!$validation->withRequest($this->request)->run()) {
             session()->setFlashdata([
                 'title' => 'Gagal',
-                'icon' => 'Validasi gagal',
+                'icon' => 'error',
                 'text' => implode(', ', $validation->getErrors())
             ]);
             return redirect()->back()->withInput();
@@ -297,7 +297,7 @@ class Properti extends BaseController
         if (!$validation->withRequest($this->request)->run()) {
             session()->setFlashdata([
                 'title' => 'Gagal',
-                'icon' => 'Validasi gagal',
+                'icon' => 'error',
                 'text' => implode(', ', $validation->getErrors())
             ]);
             return redirect()->back()->withInput();

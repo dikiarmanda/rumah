@@ -40,9 +40,6 @@
       onFinished: function (event, currentIndex) {
         $("#form-create").submit();
       },
-      label: {
-        finish: "submit",
-      },
       onStepChanged: function (event, currentIndex, priorIndex) {
         // Re-inisialisasi hanya step aktif
         let currentStep = $(".body.current");

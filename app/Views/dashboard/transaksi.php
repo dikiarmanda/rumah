@@ -220,7 +220,7 @@
           <td><input type="text" name="wa_buyer" class="form-control" required></td>
         </tr>
         <tr>
-          <th>UTJ</th>
+          <th>Omset</th>
           <td><input type="text" name="price" class="form-control currency" required></td>
         </tr>
         <input type="hidden" name="status" value="${res.status}">
