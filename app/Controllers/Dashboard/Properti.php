@@ -402,12 +402,32 @@ class Properti extends BaseController
 
     public function saveImages($property_id, $fileName, $images)
     {
-        if ($images->isValid()) {
-            $uploaded = uploadPropertyImages($images, $property_id, $fileName);
+        // Jika tidak ada gambar, langsung keluar
+        if (empty($images)) {
+            return;
         }
 
-        // simpan gambar ke DB
-        if (isset($uploaded) && !empty($uploaded)) {
+        // Pastikan $images berbentuk array
+        if (!is_array($images)) {
+            $images = [$images];
+        }
+
+        // Filter hanya file yang valid
+        $validImages = array_filter($images, function ($img) {
+            return $img instanceof \CodeIgniter\HTTP\Files\UploadedFile
+                && $img->isValid()
+                && !$img->hasMoved();
+        });
+
+        // Kalau tidak ada file valid, keluar juga
+        if (empty($validImages)) {
+            return;
+        }
+
+        $uploaded = uploadPropertyImages($validImages, $property_id, $fileName);
+
+        // Pastikan hasilnya berupa array
+        if (is_array($uploaded)) {
             foreach ($uploaded as $key => $imgUrl) {
                 $this->propertyImageModel->insert([
                     'property_id' => $property_id,
