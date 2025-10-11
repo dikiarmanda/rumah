@@ -168,4 +168,30 @@ class Leaderboard extends BaseController
     }
     return redirect()->to('dashboard/leaderboard');
   }
+
+  public function tahun()
+  {
+    $tahun = $this->request->getPost('tahun');
+
+    $cekData = $this->leaderboardModel->where('tahun', $tahun)->countAllResults();
+    if ($cekData == 0) {
+      $res = [
+        'title' => 'Gagal',
+        'icon' => 'error',
+        'text' => 'Belum ada data pada tahun ' . $tahun . '. Mohon set agen pada tahun tersebut terlebih dahulu.'
+      ];
+
+      return $this->response->setJSON($res);
+    }
+
+    $this->leaderboardModel->setTampil($tahun);
+
+    $res = [
+      'title' => 'Berhasil',
+      'icon' => 'success',
+      'text' => 'Tahun ' . $tahun . ' berhasil ditampilkan.'
+    ];
+
+    return $this->response->setJSON($res);
+  }
 }

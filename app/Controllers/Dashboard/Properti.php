@@ -37,9 +37,11 @@ class Properti extends BaseController
 
     public function index()
     {
-        $agen_id = session()->get('role') == 'agen' ? (int) (session()->get('id')) : null;
-        $property = $this->propertyModel->getData($agen_id);
-        $draft = $this->propertyModel->where('publish', 0)->countAllResults();
+        $property = $this->propertyModel->getData();
+        $draft = $this->propertyModel
+            ->where('publish', 0)
+            ->whereIn('status', ['dijual', 'disewakan'])
+            ->countAllResults();
         $data = [
             'title' => 'Daftar Properti',
             'subtitle' => 'Kelola semua daftar properti Anda di Sini.',
@@ -61,11 +63,9 @@ class Properti extends BaseController
     public function get_ajax()
     {
         $status = defaultValue($this->request->getPost('status'), null);
-        $agen = defaultValue($this->request->getPost('agen'), null);
-        $agen = session()->get('role') == 'agen' ? (int) (session()->get('id')) : $agen;
         $kategori = defaultValue($this->request->getPost('kategori'), null);
 
-        $res = $this->propertyModel->getData($agen, $status, $kategori);
+        $res = $this->propertyModel->getData(null, $status, $kategori);
         return $this->response->setJSON($res);
     }
 

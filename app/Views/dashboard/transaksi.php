@@ -4,7 +4,7 @@
     <p class="text-muted"><?= $subtitle ?></p>
   </div>
   <div class="col text-end">
-    <button class="btn btn-primary btn-modal" data-bs-toggle="modal" data-bs-target="#myModal">
+    <button class="btn btn-primary" id="btn-add" data-bs-toggle="modal" data-bs-target="#myModal">
       <i class="fas fa-plus"></i> Tambah Data
     </button>
   </div>
@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Validasi -->
 <div class="modal fade" id="validasiModal" tabindex="-1" aria-labelledby="validasiModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="min-width: 50%;">
     <div class="modal-content">
@@ -85,10 +85,10 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel"></h5>
+        <h5 class="modal-title" id="myModalLabel">Tambah Transaksi</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="" method="post">
+      <form action="<?= base_url('dashboard/transaksi/store') ?>" method="post">
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
@@ -101,7 +101,32 @@
                   <?php endforeach ?>
                 </select>
               </div>
-              <div class="table-responsive" id="property-details"></div>
+              <div class="table-responsive property-details"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="myModalEdit" tabindex="-1" aria-labelledby="myModalEditLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalEditLabel">Edit Transaksi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" method="post">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive property-details"></div>
             </div>
           </div>
         </div>
@@ -117,9 +142,8 @@
 <?= $this->section('js') ?>
 <script>
   let data = <?= json_encode($data) ?>;
-  console.log(data);
-
   let transaksi = {};
+  let agens = <?= json_encode($agens) ?>;
 
   let status = $('#status').find('option:selected').val();
   let agen = $('#agen').find('option:selected').val();
@@ -133,42 +157,30 @@
     getData(kategori, status, agen);
   });
 
-  let agens = <?= json_encode($agens) ?>;
 
-  handleModalClick({
-    selector: '.btn-modal',
-    modalTitle: 'Transaksi',
-    formActionUrl: id => '<?= base_url('dashboard/transaksi/') ?>' + (id ? 'update/' : 'store'),
-    findData: id => transaksi.find(item => item.transaksi_id == id),
-    defaultValues: {
-      property_id: '',
-    },
-    fieldMap: {
-      inputs: [{
-        name: 'buyer',
-      }, {
-        name: 'wa_buyer',
-      }, {
-        name: 'price',
-        valueKey: 'jual',
-      }, {
-        name: 'tanggal_penjualan',
-      }, {
-        name: 'tanggal_serah_terima',
-      },],
-      selects: [{
-        name: 'property_id',
-        valueKey: 'id',
-      },],
-    }
+  $(document).on('click', '.btn-modal', function () {
+    let id = $(this).data('id');
+    let readonly = $(this).data('readonly');
+    let res = transaksi.find(e => e.transaksi_id == id);
+    $('#myModalEdit').find('form').attr('action', `<?= base_url('dashboard/transaksi/update/') ?>${id}`);
+    dataTransaksi(res.id, res, readonly);
   });
 
   $(document).on('change', '#property_id', function (e) {
     e.preventDefault();
     let id = $(this).find('option:selected').val();
     let res = data.find(e => e.id == id);
+    dataTransaksi(id, res);
+  });
 
+  function dataTransaksi(id, res, readonly = false) {
+    if (readonly) {
+      $('#myModalEdit').find('button[type="submit"]').hide();
+    } else {
+      $('#myModalEdit').find('button[type="submit"]').show();
+    }
     if (res != undefined) {
+      $('#property-details').html('');
       let html = `
       <table class="table table-bordered">
         <tr>
@@ -198,7 +210,7 @@
         <tr>
           <th>Agen</th>
           <td>
-            <select class="form-select modal-select" id="agent_id" name="agent_id">`;
+            <select class="form-select modal-select" id="agent_id" name="agent_id" ${readonly ? 'readonly' : ''}>`;
 
       if (role == 'agen') {
         html += `<option value="<?= session('id') ?>" selected="selected"><?= session('name') ?></option>`;
@@ -213,47 +225,46 @@
         </tr>
         <tr>
           <th>Pembeli</th>
-          <td><input type="text" name="buyer" class="form-control" required></td>
+          <td><input type="text" name="buyer" class="form-control" required ${readonly ? 'readonly' : ''}></td>
         </tr>
         <tr>
           <th>Whatsapp Pembeli</th>
-          <td><input type="text" name="wa_buyer" class="form-control" required></td>
+          <td><input type="text" name="wa_buyer" class="form-control" required ${readonly ? 'readonly' : ''}></td>
         </tr>
         <tr>
           <th>Omset</th>
-          <td><input type="text" name="price" class="form-control currency" required></td>
+          <td><input type="text" name="price" class="form-control currency" required ${readonly ? 'readonly' : ''}></td>
         </tr>
         <input type="hidden" name="status" value="${res.status}">
         <tr>
           <th>Tanggal Pembelian</th>
-          <td><input type="date" name="tanggal_penjualan" class="form-control" required></td>
+          <td><input type="date" name="tanggal_penjualan" class="form-control" required ${readonly ? 'readonly' : ''}></td>
         </tr>
         <tr>
           <th>Tanggal Serah Terima</th>
-          <td><input type="date" name="tanggal_serah_terima" class="form-control" required></td>
+          <td><input type="date" name="tanggal_serah_terima" class="form-control" required ${readonly ? 'readonly' : ''}></td>
         </tr>
       </table>
       `;
 
-      $('#property-details').html(html);
-      fillForm(id);
+      $('.property-details').html(html);
+      if (res.transaksi_id != null) {
+        fillForm(res.transaksi_id);
+      }
     }
-  });
+  }
 
   function fillForm(id) {
-    let i = transaksi.find(item => item.id == id);
+    let i = transaksi.find(item => item.transaksi_id == id);
     console.log(i);
 
-    if (i != undefined) {
-      $('select[name="property_id"]').parent().remove();
-      $('input[name="buyer"]').before('<input type="hidden" name="property_id" value="' + i.id + '">');
-      $('input[name="buyer"]').before('<input type="hidden" name="status" value="pending">');
-      $('input[name="buyer"]').val(i.buyer);
-      $('input[name="wa_buyer"]').val(i.wa_buyer);
-      $('input[name="price"]').val(formatAngka(i.jual));
-      $('input[name="tanggal_penjualan"]').val(i.tanggal_penjualan);
-      $('input[name="tanggal_serah_terima"]').val(i.tanggal_serah_terima);
-    }
+    $('input[name="buyer"]').before('<input type="hidden" name="property_id" value="' + i.id + '">');
+    $('input[name="buyer"]').before('<input type="hidden" name="status" value="pending">');
+    $('input[name="buyer"]').val(i.buyer);
+    $('input[name="wa_buyer"]').val(i.wa_buyer);
+    $('input[name="price"]').val(formatAngka(i.jual));
+    $('input[name="tanggal_penjualan"]').val(i.tanggal_penjualan);
+    $('input[name="tanggal_serah_terima"]').val(i.tanggal_serah_terima);
   }
 
   $(document).on('click', '.btn-validasi', function () {
@@ -337,7 +348,7 @@
         agen: agen,
       },
       success: function (res) {
-        // console.log(res);
+        console.log(res);
         transaksi = res;
         generateTable(res);
       },
@@ -383,9 +394,15 @@
       <td class="d-flex justify-content-center gap-1">`;
 
       if (role == 'agen') {
-        html += `<button type="button" class="btn btn-light btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#myModal"
-            data-id="${row.transaksi_id}"><i class="fas fa-edit"></i>
-          </button>`;
+        if (row.transaksi == 'Valid') {
+          html += `<button type="button" class="btn btn-info btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#myModalEdit"
+              data-id="${row.transaksi_id}" data-readonly="true"><i class="fas fa-eye"></i>
+            </button>`;
+        } else {
+          html += `<button type="button" class="btn btn-light btn-sm btn-modal" data-bs-toggle="modal" data-bs-target="#myModalEdit"
+              data-id="${row.transaksi_id}"><i class="fas fa-edit"></i>
+            </button>`;
+        }
       } else {
         if (row.transaksi != 'Valid') {
           html += `<button type="button" class="btn btn-info btn-sm btn-validasi" data-bs-toggle="modal" data-bs-target="#validasiModal"

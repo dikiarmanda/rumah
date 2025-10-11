@@ -34,7 +34,7 @@ class Home extends BaseController
             'contact' => $this->contactModel->getData(),
             'stat' => $this->laporanModel->getStatistik(),
             'testimoni' => $testimoni,
-            'leaderboard' => $this->leaderboardModel->getData(date('Y') - 1),
+            'leaderboard' => $this->leaderboardModel->getData(true),
         ];
         return $this->template->displayLanding('home', $data);
     }

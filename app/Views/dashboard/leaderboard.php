@@ -12,6 +12,19 @@
 
 <div class="card">
   <div class="card-body">
+    <div class="row align-items-end">
+      <div class="col-2">
+        <div class="form-group">
+          <label for="tahun">Tahun <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" id="tahun" name="tahun" value="" required=>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary" id="btnSimpanTahun">Simpan</button>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped" id="basic-table">
         <thead>
@@ -184,6 +197,31 @@
   $('#myModal').on('hidden.bs.modal', function (e) {
     $('#photopreview').attr('src', `https://dummyimage.com/1080x720/d9d9d9/ffffff`);
     $('#photo').val('');
+  })
+
+  $(document).on('click', '#btnSimpanTahun', function () {
+    let tahun = $('#tahun').val();
+    $.ajax({
+      url: '<?= base_url('dashboard/leaderboard/tahun') ?>',
+      type: 'POST',
+      data: {
+        tahun: tahun,
+      },
+      success: function (res) {
+        Swal.fire({
+          title: res.title,
+          icon: res.icon,
+          text: res.text,
+        });
+      },
+      error: function (err) {
+        Swal.fire({
+          title: res.title,
+          icon: res.icon,
+          text: res.text,
+        });
+      }
+    });
   })
 
   handleModalClick({

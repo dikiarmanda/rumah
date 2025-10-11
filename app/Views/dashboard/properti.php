@@ -75,15 +75,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-              <div class="form-group">
-                <label for="property_id">Properti</label>
-                <select class="form-select modal-select" name="property_id" id="property_id">
-                  <option value="">Pilih Properti</option>
-                  <?php foreach ($data as $property): ?>
-                    <option value="<?= $property['id'] ?>"><?= $property['title'] ?></option>
-                  <?php endforeach ?>
-                </select>
-              </div>
+              <input type="hidden" name="property_id" id="property_id">
               <div class="table-responsive" id="property-details"></div>
             </div>
           </div>
@@ -264,22 +256,19 @@
     modalTitle: 'Transaksi',
     formActionUrl: id => '<?= base_url('dashboard/transaksi/') ?>' + (id ? 'update/' : 'store'),
     findData: id => data.find(item => item.id == id),
-    defaultValues: {
-      property_id: '',
-    },
+    defaultValues: {},
     fieldMap: {
       inputs: [{
-      },],
-      selects: [{
         name: 'property_id',
         valueKey: 'id',
+      },],
+      selects: [{
       },],
     }
   });
 
-  $(document).on('change', '#property_id', function (e) {
-    e.preventDefault();
-    let id = $(this).find('option:selected').val();
+  $(document).on('click', '.btn-modal', function (e) {
+    let id = $(this).data('id');
     let res = data.find(e => e.id == id);
 
     if (res != undefined) {

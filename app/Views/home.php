@@ -278,41 +278,12 @@
   </div>
 </section>
 
-<!-- Testimoni -->
-<section class="py-5">
-  <div class="container">
-    <div class="text-center mb-4">
-      <h2 class="section-title">Apa Kata Klien</h2>
-      <p class="section-subtitle">Pengalaman nyata dari mereka yang telah menemukan propertinya</p>
-    </div>
-    <div class="row g-4">
-      <?php foreach ($testimoni as $key => $item): ?>
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-3">
-                <img src="<?= base_url('public/images/faces/face' . (10 + $key) . '.jpg') ?>" class="rounded-circle me-3"
-                  width="48" height="48" alt="Klien">
-                <div>
-                  <div class="fw-semibold"><?= $item['name'] ?></div>
-                  <div class="text-muted small"><?= $item['alamat'] ?></div>
-                </div>
-              </div>
-              <p class="mb-0"><?= $item['text'] ?></p>
-            </div>
-          </div>
-        </div>
-      <?php endforeach ?>
-    </div>
-  </div>
-</section>
-
 <!-- Agen Terbaik -->
 <?php if (!empty($leaderboard)): ?>
-  <section class="py-5 bg-light">
+  <section class="py-5">
     <div class="container">
       <div class="text-center mb-4">
-        <h2 class="section-title">Agen Terbaik Periode Tahun <?= date('Y') - 1 ?></h2>
+        <h2 class="section-title">Agen Terbaik Periode Tahun <?= $leaderboard[0]['tahun'] ?></h2>
         <p class="section-subtitle">Mereka yang paling berprestasi dan terpercaya.</p>
       </div>
       <div class="row g-4 justify-content-center">
@@ -344,7 +315,7 @@
 <?php endif; ?>
 
 <!-- Kontak -->
-<section id="kontak" class="py-5">
+<section id="kontak" class="py-5 bg-light">
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-6">

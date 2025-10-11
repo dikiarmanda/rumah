@@ -17,20 +17,33 @@ class LeaderboardModel extends Model
     'peringkat',
     'tahun',
     'photo',
+    'tampil'
   ];
 
   protected $useTimestamps = false;
 
-  public function getData($tahun = null)
+  public function getData($guest = false)
   {
     $builder = $this->db->table($this->table . ' ap');
     $builder->select('ap.*, u.name, u.photo AS photo_agen, u.email, u.phone, u.location');
     $builder->join('users u', 'u.id = ap.agent_id');
-    if ($tahun != null) {
-      $builder->where('tahun', $tahun);
+    if ($guest) {
+      $builder->where('tampil', 1);
     }
     $builder->orderBy('tahun', 'desc');
     $builder->orderBy('peringkat', 'asc');
     return $builder->get()->getResultArray();
+  }
+
+  public function setTampil($tahun)
+  {
+    $builder = $this->db->table($this->table);
+    $builder->update(['tampil' => 0]);
+
+    $builder = $this->db->table($this->table);
+    $builder->where('tahun', $tahun);
+    $builder->update(['tampil' => 1]);
+
+    return true;
   }
 }

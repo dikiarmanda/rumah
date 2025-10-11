@@ -98,6 +98,7 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard', 'filter
     $routes->post('store', 'Leaderboard::store');
     $routes->post('update/(:num)', 'Leaderboard::update/$1');
     $routes->post('delete/(:num)', 'Leaderboard::delete/$1');
+    $routes->post('tahun', 'Leaderboard::tahun');
   });
 
   $routes->group('user', ['filter' => 'auth:admin,owner'], function ($routes) {
