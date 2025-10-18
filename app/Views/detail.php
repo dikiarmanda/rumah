@@ -120,7 +120,7 @@
 
       <hr>
       <!-- Simulasi KPR Section -->
-      <div class="card shadow-sm border-0" style="border-radius: 15px;">
+      <div class="card shadow-sm border-0 mb-4" style="border-radius: 15px;">
         <div class="card-body p-4">
           <h4 class="fw-bold mb-4 text-center">Simulasi Cicilan KPR</h4>
 
@@ -190,18 +190,24 @@
     <!-- Agent Info -->
     <div class="col-lg-4">
       <?php foreach ($data['agents'] as $agen): ?>
-        <div class="card agent-card shadow-sm sticky-top mb-3" style="top: 20px;">
+        <div class="card agent-card shadow-sm sticky-top mb-3" style="top: 20px; z-index: 1;">
           <div class="card-header text-center bg-primary text-white">
             <h5 class="mb-0 fw-bold">Informasi Agen</h5>
           </div>
-          <div class="card-body text-center">
-            <img src="<?= base_url($agen['photo']) ?>" class="card-img-top agent-image" alt="<?= esc($agen['name']) ?>"
-              style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
-            <h5 class="card-title fw-bold"><?= $agen['name'] ?></h5>
-            <p class="text-muted mb-3"><i class="fas fa-map-marker-alt me-2"></i><?= $agen['location'] ?></p>
-            <a href="https://wa.me/<?= $agen['phone'] ?>" target="_blank" class="btn btn-success w-100 py-2 fw-bold">
-              <i class="fab fa-whatsapp me-2"></i>Hubungi via WhatsApp
-            </a>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-2">
+                <img src="<?= base_url($agen['photo']) ?>" class="card-img-top agent-image" alt="<?= esc($agen['name']) ?>"
+                  style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+              </div>
+              <div class="col-sm-10">
+                <h5 class="card-title fw-bold m-0"><?= $agen['name'] ?></h5>
+                <p class="text-muted mb-3"><i class="fas fa-map-marker-alt me-2"></i><?= $agen['location'] ?></p>
+                <a href="https://wa.me/<?= $agen['phone'] ?>" target="_blank" class="btn btn-success w-100 py-2 fw-bold">
+                  <i class="fab fa-whatsapp me-2"></i>Hubungi via WhatsApp
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       <?php endforeach ?>

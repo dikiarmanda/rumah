@@ -38,10 +38,9 @@ class Properti extends BaseController
     public function index()
     {
         $property = $this->propertyModel->getData();
-        $draft = $this->propertyModel
-            ->where('publish', 0)
-            ->whereIn('status', ['dijual', 'disewakan'])
-            ->countAllResults();
+        $draft = count(array_filter($property, function ($item) {
+            return $item['publish'] == 0;
+        }));
         $data = [
             'title' => 'Daftar Properti',
             'subtitle' => 'Kelola semua daftar properti Anda di Sini.',

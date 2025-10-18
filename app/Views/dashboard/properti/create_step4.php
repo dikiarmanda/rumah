@@ -19,7 +19,7 @@
           <?php else: ?>
             <option value="">--Pilih Agen--</option>
             <?php foreach ($agens as $row): ?>
-              <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+              <option value="<?= $row['id'] ?>" selected><?= $row['name'] ?></option>
             <?php endforeach ?>
           <?php endif ?>
         </select>
