@@ -189,15 +189,16 @@
 
     <!-- Agent Info -->
     <div class="col-lg-4">
-      <?php foreach ($data['agents'] as $agen): ?>
-        <div class="card agent-card shadow-sm sticky-top mb-3" style="top: 20px; z-index: 1;">
-          <div class="card-header text-center bg-primary text-white">
-            <h5 class="mb-0 fw-bold">Informasi Agen</h5>
-          </div>
-          <div class="card-body">
-            <div class="row">
+      <div class="card agent-card shadow-sm sticky-top mb-3" style="top: 20px; z-index: 1;">
+        <div class="card-header text-center bg-primary text-white">
+          <h5 class="mb-0 fw-bold">Informasi Agen</h5>
+        </div>
+        <div class="card-body">
+          <?php foreach ($agents as $agen): ?>
+            <div class="row mb-3">
               <div class="col-sm-2">
-                <img src="<?= base_url($agen['photo']) ?>" class="card-img-top agent-image" alt="<?= esc($agen['name']) ?>"
+                <img src="<?= base_url($agen['photo']) ?>" class="card-img-top agent-image"
+                  alt="<?= esc($agen['name']) ?>"
                   style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
               </div>
               <div class="col-sm-10">
@@ -208,9 +209,10 @@
                 </a>
               </div>
             </div>
-          </div>
+            <hr>
+          <?php endforeach ?>
         </div>
-      <?php endforeach ?>
+      </div>
     </div>
 
   </div>

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
 use App\Models\ArticleModel;
 use App\Models\ContactModel;
 use App\Models\CategoryModel;
@@ -10,6 +11,7 @@ use App\Controllers\BaseController;
 
 class Jual extends BaseController
 {
+  protected $userModel;
   protected $contactModel;
   protected $articleModel;
   protected $PropertyModel;
@@ -17,6 +19,7 @@ class Jual extends BaseController
 
   public function __construct()
   {
+    $this->userModel = new UserModel();
     $this->contactModel = new ContactModel();
     $this->articleModel = new ArticleModel();
     $this->PropertyModel = new PropertyModel();
@@ -119,10 +122,13 @@ class Jual extends BaseController
     $owner = stripos($property['description'], ';') !== false ? true : false;
     $explode = $owner ? explode(';', $property['description']) : [$property['description'], null];
     $property['description'] = $explode[0];
+    $agents = $this->userModel->select('id, name, phone, location, photo')->where('role', 'agen')
+    ->orderBy('name', 'random')->findAll();
     
     $data = [
       'contact' => $this->contactModel->getData(),
       'data' => $property,
+      'agents' => $agents
     ];
     return $this->template->displayLanding('detail', $data);
   }
