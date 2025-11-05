@@ -34,7 +34,33 @@
     border: none;
     padding: 0.75rem 0;
   }
+
+  .agent-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  #tableAgents {
+    font-size: 0.9rem;
+  }
+
+  #tableAgents thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    padding: 0.75rem;
+  }
+
+  #tableAgents tbody td {
+    padding: 0.75rem;
+    vertical-align: middle;
+  }
 </style>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="<?= base_url('public/vendors/datatables/css/datatables.min.css') ?>" />
 
 <div class="container my-5">
   <div class="row">
@@ -194,23 +220,36 @@
           <h5 class="mb-0 fw-bold">Informasi Agen</h5>
         </div>
         <div class="card-body">
-          <?php foreach ($agents as $agen): ?>
-            <div class="row mb-3">
-              <div class="col-sm-2">
-                <img src="<?= base_url($agen['photo']) ?>" class="card-img-top agent-image"
-                  alt="<?= esc($agen['name']) ?>"
-                  style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
-              </div>
-              <div class="col-sm-10">
-                <h5 class="card-title fw-bold m-0"><?= $agen['name'] ?></h5>
-                <p class="text-muted mb-3"><i class="fas fa-map-marker-alt me-2"></i><?= $agen['location'] ?></p>
-                <a href="https://wa.me/<?= $agen['phone'] ?>" target="_blank" class="btn btn-success w-100 py-2 fw-bold">
-                  <i class="fab fa-whatsapp me-2"></i>Hubungi via WhatsApp
-                </a>
-              </div>
-            </div>
-            <hr>
-          <?php endforeach ?>
+          <table id="tableAgents" class="table table-hover mb-0" style="width:100%">
+            <thead>
+              <tr>
+                <th>Agen</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($agents as $agen): ?>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="<?= base_url($agen['photo']) ?>" class="agent-image me-3" alt="<?= esc($agen['name']) ?>">
+                      <div>
+                        <h6 class="mb-1 fw-bold"><?= esc($agen['name']) ?></h6>
+                        <small class="text-muted">
+                          <i class="fas fa-map-marker-alt me-1"></i><?= esc($agen['location']) ?>
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <a href="https://wa.me/<?= $agen['phone'] ?>" target="_blank" class="btn btn-success btn-sm fw-bold">
+                      <i class="fab fa-whatsapp"></i>
+                    </a>
+                  </td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -219,6 +258,35 @@
 </div>
 
 <?= $this->include('footer-mini') ?>
+
+<!-- DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/dt-2.2.2/datatables.min.css" />
+<script src="https://cdn.datatables.net/v/bs5/dt-2.2.2/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.jquery.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new DataTable('#tableAgents', {
+      pageLength: 5,
+      searching: true,
+      paging: true,
+      info: false,
+      lengthChange: false,
+      order: [], // Nonaktifkan sorting default
+      ordering: false, // Nonaktifkan fitur sorting
+      language: {
+        search: "Cari:",
+        emptyTable: "Tidak ada data agen",
+        zeroRecords: "Tidak ada data yang cocok"
+      },
+      columnDefs: [
+        { orderable: false, targets: [1] }
+      ]
+    });
+  });
+</script>
 
 <script>
   // Format number dengan separator ribuan

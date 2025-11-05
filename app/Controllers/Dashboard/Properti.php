@@ -436,4 +436,49 @@ class Properti extends BaseController
             }
         }
     }
+
+    public function deleteImage($id)
+    {
+        // Validasi ID
+        if (!$id) {
+            return $this->response->setJSON([
+                'title' => 'Gagal',
+                'icon' => 'error',
+                'text' => 'ID gambar tidak ditemukan'
+            ]);
+        }
+
+        // Cari gambar di database
+        $image = $this->propertyImageModel->find($id);
+        if (!$image) {
+            return $this->response->setJSON([
+                'title' => 'Gagal',
+                'icon' => 'error',
+                'text' => 'Gambar tidak ditemukan'
+            ]);
+        }
+
+        try {
+            // Hapus file dari filesystem
+            $imagePath = FCPATH . $image['image_url'];
+            if (file_exists($imagePath)) {
+                @unlink($imagePath);
+            }
+
+            // Hapus record dari database
+            $this->propertyImageModel->delete($id);
+
+            return $this->response->setJSON([
+                'title' => 'Berhasil',
+                'icon' => 'success',
+                'text' => 'Gambar berhasil dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'title' => 'Gagal',
+                'icon' => 'error',
+                'text' => 'Gagal menghapus gambar: ' . $e->getMessage()
+            ]);
+        }
+    }
 }
