@@ -264,8 +264,8 @@
                 <div class="col-3">
                   <div class="form-group">
                     <input type="file" class="dropify" name="images[]"
-                      data-default-file="<?= base_url($image['image_url']) ?>" data-allowed-file-extensions="jpg jpeg png"
-                      data-max-file-size="3M">
+                      data-default-file="<?= base_url($image['image_url']) ?>" data-image-id="<?= $image['id'] ?>"
+                      data-allowed-file-extensions="jpg jpeg png" data-max-file-size="3M">
                   </div>
                 </div>
               <?php endforeach ?>
@@ -374,5 +374,107 @@
     });
     $('#city').html(opt);
   }
+
+  // Fungsi untuk menambahkan input file baru secara dinamis
+  $(document).on('change', '#upload-container .dropify', function () {
+    let parent = $('#upload-container');
+    let currentInput = $(this);
+    let lastInput = parent.find('.dropify').last();
+
+    // Hanya tambahkan input baru jika input yang diubah adalah input terakhir
+    if (currentInput.is(lastInput) && currentInput.val() !== '') {
+      // Tunggu sebentar untuk memastikan dropify sudah selesai memproses
+      setTimeout(function () {
+        let lastInputCheck = parent.find('.dropify').last();
+
+        // Cek apakah input terakhir memiliki file (baik dari input baru maupun default file)
+        let hasFile = false;
+        if (lastInputCheck.val() !== '' || lastInputCheck.data('default-file') ||
+          lastInputCheck.closest('.dropify-wrapper').hasClass('has-preview')) {
+          hasFile = true;
+        }
+
+        // Jika input terakhir memiliki file, tambahkan input baru
+        if (hasFile) {
+          parent.append(`
+            <div class="col-3">
+              <div class="form-group">
+                <input type="file" class="dropify" name="images[]" data-allowed-file-extensions="jpg jpeg png"
+                  data-max-file-size="3M">
+              </div>
+            </div>
+          `);
+          // Inisialisasi dropify pada input baru
+          parent.find('.dropify').last().dropify();
+        }
+      }, 100);
+    }
+  });
+
+  // Event handler untuk menghapus gambar ketika tombol remove diklik
+  $(document).on('dropify.afterClear', '#upload-container .dropify', function (event, element) {
+    let input = $(this);
+    let imageId = input.data('image-id');
+    let defaultFile = input.data('default-file');
+
+    // Hanya proses jika gambar berasal dari database (memiliki image-id)
+    if (imageId) {
+      // Simpan referensi untuk restore jika dibatalkan
+      let container = input.closest('.col-3');
+
+      // Konfirmasi sebelum menghapus
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menghapus gambar ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Panggil method deleteImage via AJAX
+          $.ajax({
+            url: `<?= base_url('dashboard/properti/delete-image/') ?>${imageId}`,
+            type: 'POST',
+            data: {},
+            success: function (res) {
+              Swal.fire({
+                title: res.title,
+                icon: res.icon,
+                text: res.text,
+              });
+
+              // Hapus elemen container dari DOM
+              container.remove();
+            },
+            error: function (xhr, status, error) {
+              Swal.fire({
+                title: 'Gagal',
+                icon: 'error',
+                text: 'Terjadi kesalahan saat menghapus gambar'
+              });
+
+              // Restore preview jika terjadi error
+              if (defaultFile) {
+                input.dropify('destroy');
+                input.attr('data-default-file', defaultFile);
+                input.attr('data-image-id', imageId);
+                input.dropify();
+              }
+            }
+          });
+        } else {
+          // Jika user membatalkan, restore preview dengan gambar asli
+          if (defaultFile) {
+            input.dropify('destroy');
+            input.attr('data-default-file', defaultFile);
+            input.attr('data-image-id', imageId);
+            input.dropify();
+          }
+        }
+      });
+    }
+    // Jika tidak ada image-id (file baru yang belum disimpan), biarkan clear berjalan normal
+  });
 </script>
 <?= $this->endSection() ?>

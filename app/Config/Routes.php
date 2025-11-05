@@ -64,6 +64,7 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard', 'filter
     $routes->post('favorite/(:num)', 'Properti::favorite/$1');
     $routes->post('disabled/(:num)', 'Properti::disabled/$1');
     $routes->post('delete/(:num)', 'Properti::delete/$1');
+    $routes->post('delete-image/(:num)', 'Properti::deleteImage/$1');
   });
 
   $routes->group('transaksi', function ($routes) {
