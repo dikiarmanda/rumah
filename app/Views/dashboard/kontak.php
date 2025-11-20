@@ -12,7 +12,12 @@
         <?php foreach ($data as $item): ?>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="<?= $item['type'] ?>"><?= ucfirst($item['type']) ?></label>
+              <label for="<?= $item['type'] ?>">
+                <?= ucfirst($item['type']) ?>
+                <?php if ($item['type'] == 'maps'): ?>
+                  (Masukkan embed link dari Google Maps [Bagikan > Sematkan peta])
+                <?php endif ?>
+              </label>
               <input type="text" class="form-control" id="<?= $item['type'] ?>" name="<?= $item['id'] ?>"
                 value="<?= esc($item['value']) ?>">
             </div>

@@ -15,8 +15,9 @@
     <div class="row align-items-end">
       <div class="col-2">
         <div class="form-group">
-          <label for="tahun">Tahun <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" id="tahun" name="tahun" value="" required=>
+          <label for="tahun">Tahun Top Sales Yang Akan Ditampilkan <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" id="tahun" name="tahun" value="<?= $tahunSelected ?>"
+            placeholder="Pilih Tahun yang ditampilkan" required>
         </div>
       </div>
       <div class="col-2">

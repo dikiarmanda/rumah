@@ -23,6 +23,7 @@ class Leaderboard extends BaseController
       'title' => 'Leaderboard',
       'subtitle' => 'Data leaderboard yang terdaftar di dalam sistem.',
       'data' => $this->leaderboardModel->getData(),
+      'tahunSelected' => $this->leaderboardModel->select('tahun')->where('tampil', 1)->first()['tahun'] ?? null,
       'agents' => $this->userModel
         ->where('status', 'aktif')
         ->where('role', 'agen')
