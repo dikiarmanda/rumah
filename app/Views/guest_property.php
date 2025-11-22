@@ -617,23 +617,27 @@
   </div>
 </section>
 
+<?= $this->section('js') ?>
 <script>
   document.getElementById('type').addEventListener('change', function () {
     document.getElementById('tipe').value = this.options[this.selectedIndex].text.trim();
   });
 
   let kabupatens = <?= json_encode($kota) ?>;
-  document.querySelector('#provinsi').addEventListener('change', function () {
-    const id = this.value;
-    const province = this.options[this.selectedIndex].text.trim();
+  $(document).on('change', '#provinsi', function () {
+    const id = $(this).val();
+    const province = $(this).find('option:selected').text().trim();
+    console.log(province);
 
-    document.querySelector('#province').value = province;
+    $('#province').val(province);
     let filteredKabupatens = kabupatens.filter(kabupaten => kabupaten.parent === id);
     let opt = `<option value="">--Pilih Kabupaten/Kota--</option>`;
     filteredKabupatens.forEach(kabupaten => {
       opt += `<option value="${kabupaten.name}">${kabupaten.name}</option>`;
     });
-    document.querySelector('#city').innerHTML = opt;
+    console.log(filteredKabupatens);
+    $('#city').html(opt);
+    $('#city').val('').trigger('change.select2');
   });
 
   document.getElementById('wajib').addEventListener('change', function () {
@@ -757,3 +761,4 @@
     }
   });
 </script>
+<?= $this->endSection() ?>

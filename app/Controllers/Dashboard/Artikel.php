@@ -73,7 +73,11 @@ class Artikel extends BaseController
         $featured = $this->request->getPost('featured');
         $thumbnail = $this->request->getFile('thumbnail');
         $slug = url_title($title, '-', true);
-        $excerpt = trim(substr($content, 0, 50)) . (strlen($content) > 50 ? '...' : '');
+        // Hapus tag HTML dan ambil hanya text content
+        $textContent = strip_tags($content);
+        $textContent = html_entity_decode($textContent, ENT_QUOTES, 'UTF-8');
+        $textContent = preg_replace('/\s+/', ' ', trim($textContent)); // Normalize whitespace
+        $excerpt = mb_substr($textContent, 0, 50) . (mb_strlen($textContent) > 50 ? '...' : '');
 
         $data = [
             'user_id' => session('id'),
@@ -85,7 +89,7 @@ class Artikel extends BaseController
             'status' => $status,
             'featured' => $featured,
         ];
-        
+
         try {
             $this->articleModel->insert($data);
             $id = $this->articleModel->insertID();
@@ -94,8 +98,12 @@ class Artikel extends BaseController
                 'icon' => 'success',
                 'text' => 'Artikel berhasil ditambahkan',
             ]);
-            $uploaded = uploadArticleImages($thumbnail, $id);
-            $this->articleModel->update($id, ['thumbnail' => $uploaded]);
+            try {
+                $uploaded = uploadArticleImages($thumbnail, $id);
+                $this->articleModel->update($id, ['thumbnail' => $uploaded]);
+            } catch (\Throwable $th) {
+
+            }
 
             return redirect()->to(base_url('dashboard/artikel'));
         } catch (\Throwable $th) {
@@ -117,7 +125,11 @@ class Artikel extends BaseController
         $featured = $this->request->getPost('featured');
         $thumbnail = $this->request->getFile('thumbnail');
         $slug = url_title($title, '-', true);
-        $excerpt = substr($content, 0, 50) . (strlen($content) > 50 ? '...' : '');
+        // Hapus tag HTML dan ambil hanya text content
+        $textContent = strip_tags($content);
+        $textContent = html_entity_decode($textContent, ENT_QUOTES, 'UTF-8');
+        $textContent = preg_replace('/\s+/', ' ', trim($textContent)); // Normalize whitespace
+        $excerpt = mb_substr($textContent, 0, 50) . (mb_strlen($textContent) > 50 ? '...' : '');
 
         $data = [
             'title' => $title,
@@ -137,9 +149,12 @@ class Artikel extends BaseController
                 'icon' => 'success',
                 'text' => 'Artikel berhasil diperbarui',
             ]);
+            try {
+                $uploaded = uploadArticleImages($thumbnail, $id);
+                $this->articleModel->update($id, ['thumbnail' => $uploaded]);
+            } catch (\Throwable $th) {
 
-            $uploaded = uploadArticleImages($thumbnail, $id);
-            $this->articleModel->update($id, ['thumbnail' => $uploaded]);
+            }
 
             return redirect()->to(base_url('dashboard/artikel'));
         } catch (\Throwable $th) {

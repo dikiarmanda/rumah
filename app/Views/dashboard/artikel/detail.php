@@ -26,12 +26,13 @@
         <div class="col-12 mb-5">
           <input type="hidden" name="content" id="content">
           <label for="editor">Konten</label>
-          <div id="editor"><?= old('content', $data['content'] ?? '') ?></div>
+          <div id="editor"></div>
+          <script type="text/template" id="editor-content"><?= old('content', $data['content'] ?? '') ?></script>
         </div>
         <div class="col-12 mt-5">
           <div class="form-group">
             <label for="thumbnail">Thumbnail <span class="text-danger">*</span></label>
-            <input type="file" class="dropify" id="thumbnail" name="thumbnail" required
+            <input type="file" class="dropify" id="thumbnail" name="thumbnail" <?= empty($data) ? 'required' : '' ?>
               data-allowed-file-extensions="jpg jpeg png" data-max-file-size="3M" <?= isset($data['thumbnail']) ? 'data-default-file="' . base_url($data['thumbnail']) . '"' : '' ?>>
           </div>
         </div>
@@ -59,6 +60,7 @@
         </div>
         <div class="col-12">
           <button type="submit" class="btn btn-primary">Simpan</button>
+          <a href="<?= base_url('dashboard/artikel') ?>" class="btn btn-secondary">Batal</a>
         </div>
       </div>
     </form>
@@ -67,19 +69,29 @@
 
 <?= $this->section('js') ?>
 <script>
-  const quill = new Quill('#editor', {
-    theme: 'snow'
+  $(document).ready(function () {
+    const quill = new Quill('#editor', {
+      theme: 'snow'
+    });
+
+    // Load content dari template script tag
+    const contentTemplate = document.getElementById('editor-content');
+    if (contentTemplate && contentTemplate.textContent.trim() !== '') {
+      const initialContent = contentTemplate.innerHTML;
+      // Gunakan dangerouslyPasteHTML untuk mem-parse HTML dengan benar
+      quill.clipboard.dangerouslyPasteHTML(initialContent);
+    }
+
+    $('form').submit(function (e) {
+      e.preventDefault();
+
+      let content = quill.root.innerHTML;
+      $('#content').val(content);
+      console.log(content);
+
+      this.submit();
+    });
   });
-
-  $('form').submit(function (e) {
-    e.preventDefault();
-
-    let content = quill.root.innerHTML;
-    $('#content').val(content);
-    console.log(content);
-
-    this.submit();
-  })
 
   let category = <?= json_encode($categories) ?>;
 
