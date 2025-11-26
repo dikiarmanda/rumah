@@ -28,6 +28,27 @@
     color: #64748b;
   }
 
+  .achievement-card img {
+    transition: transform 0.3s ease;
+  }
+
+  .achievement-card:hover img {
+    transform: scale(1.05);
+  }
+
+  #imageModal .modal-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+  }
+
+  #imageModal .modal-body {
+    background: transparent;
+  }
+
+  #imageModal #modalTitle {
+    color: #1f2937 !important;
+  }
+
   @media (min-width: 992px) {
     .hero-section {
       padding: 128px 0;
@@ -206,6 +227,90 @@
   </div>
 </section>
 
+<!-- Penghargaan -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Penghargaan & Prestasi</h2>
+      <p class="section-subtitle">Bukti komitmen kami dalam memberikan pelayanan terbaik di industri properti</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100 achievement-card">
+          <div class="card-body p-0">
+            <div class="position-relative overflow-hidden rounded-top" style="height: 350px; cursor: pointer;"
+              onclick="openImageModal('<?= base_url('public/images/achievement/1.jpeg') ?>', 'Runner Up Top Agent Property 2024')">
+              <img src="<?= base_url('public/images/achievement/1.jpeg') ?>" class="w-100 h-100 rounded-top"
+                style="object-fit: cover;" alt="Penghargaan 1">
+            </div>
+            <div class="p-4 text-center">
+              <div class="feature-icon bg-warning mx-auto mb-3">
+                <i class="fas fa-trophy text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Runner Up Top Agent Property 2024</h5>
+              <p class="text-muted mb-0 small">Versi BRI HR Muhammad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100 achievement-card">
+          <div class="card-body p-0">
+            <div class="position-relative overflow-hidden rounded-top" style="height: 350px; cursor: pointer;"
+              onclick="openImageModal('<?= base_url('public/images/achievement/3.jpeg') ?>', 'Top Agent Realisasi Terbanyak 2024')">
+              <img src="<?= base_url('public/images/achievement/3.jpeg') ?>" class="w-100 h-100 rounded-top"
+                style="object-fit: cover;" alt="Penghargaan 2">
+            </div>
+            <div class="p-4 text-center">
+              <div class="feature-icon bg-primary mx-auto mb-3">
+                <i class="fas fa-medal text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Top Agent Realisasi Terbanyak 2024</h5>
+              <p class="text-muted mb-0 small">Dari Wang Residence</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100 achievement-card">
+          <div class="card-body p-0">
+            <div class="position-relative overflow-hidden rounded-top" style="height: 350px; cursor: pointer;"
+              onclick="openImageModal('<?= base_url('public/images/achievement/2.jpeg') ?>', 'Agen Terpercaya')">
+              <img src="<?= base_url('public/images/achievement/2.jpeg') ?>" class="w-100 h-100 rounded-top"
+                style="object-fit: cover;" alt="Penghargaan 3">
+            </div>
+            <div class="p-4 text-center">
+              <div class="feature-icon bg-success mx-auto mb-3">
+                <i class="fas fa-award text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Agen Terpercaya</h5>
+              <p class="text-muted mb-0 small"><?= $stat['tahun'] ?> Tahun Pengalaman</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100 achievement-card">
+          <div class="card-body p-0">
+            <div class="position-relative overflow-hidden rounded-top" style="height: 350px; cursor: pointer;"
+              onclick="openImageModal('<?= base_url('public/images/achievement/4.jpeg') ?>', 'Prestasi Terbaik')">
+              <img src="<?= base_url('public/images/achievement/4.jpeg') ?>" class="w-100 h-100 rounded-top"
+                style="object-fit: cover;" alt="Penghargaan 4">
+            </div>
+            <div class="p-4 text-center">
+              <div class="feature-icon bg-danger mx-auto mb-3">
+                <i class="fas fa-star text-white"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Apresiasi dari PT. Metro Kencana</h5>
+              <p class="text-muted mb-0 small">Kepada Sampro Indonesia atas kontribusi penjualan terbanyak Palm Ville Regency 2024</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Visi Misi -->
 <section id="visi-misi" class="py-5">
   <div class="container">
@@ -361,5 +466,39 @@
   </div>
 </section>
 
+<!-- Modal Image Full -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true"
+  data-bs-backdrop="true" data-bs-keyboard="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content border-0">
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4 text-center">
+        <img id="modalImage" src="" class="img-fluid rounded shadow-lg" alt="Penghargaan"
+          style="max-height: 85vh; width: auto;">
+        <h5 class="mt-3 mb-0" id="modalTitle"></h5>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Footer konten -->
 <?= $this->include('footer-mini') ?>
+
+<script>
+  function openImageModal(imageSrc, title) {
+    document.getElementById('modalImage').src = imageSrc;
+    document.getElementById('modalTitle').textContent = title;
+    const modalElement = document.getElementById('imageModal');
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+
+    // Handler untuk menutup modal saat klik di backdrop
+    modalElement.addEventListener('click', function (event) {
+      if (event.target === modalElement) {
+        modal.hide();
+      }
+    });
+  }
+</script>
