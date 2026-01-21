@@ -96,7 +96,14 @@ class Transaksi extends BaseController
         }
 
         try {
-            $this->transactionModel->insert($data);
+            // Cek apakah transaksi untuk properti ini sudah ada
+            $existing = $this->transactionModel->where('property_id', $property_id)->first();
+
+            if ($existing) {
+                $this->transactionModel->update($existing['id'], $data);
+            } else {
+                $this->transactionModel->insert($data);
+            }
 
             $this->propertyModel->update($property_id, [
                 'publish' => 0,
