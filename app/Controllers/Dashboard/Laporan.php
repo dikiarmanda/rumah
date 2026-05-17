@@ -24,23 +24,17 @@ class Laporan extends BaseController
    * Halaman utama laporan
    */
   public function index()
-  {    
+  {
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
+
     $data = [
       'title' => 'Laporan Penjualan & Performa Agen',
-      'tahun_terpilih' => $this->request->getGet('tahun') ?? date('Y'),
-      'bulan_terpilih' => $this->request->getGet('bulan') ?? date('n'),
-      'tahun_tersedia' => $this->laporanModel->getTahunTersedia(),
-      'bulan_tersedia' => $this->laporanModel->getBulanTersedia($this->request->getGet('tahun') ?? date('Y')),
-      'total_statistik' => $this->laporanModel->getTotalStatistikPenjualan(
-        $this->request->getGet('tahun') ?? date('Y'),
-        $this->request->getGet('bulan') ?? date('n')
-      ),
-      'statistik_per_bulan' => $this->laporanModel->getStatistikPenjualanPerBulan(
-        $this->request->getGet('tahun') ?? date('Y')
-      ),
-      'bulan_names' => get_bulan(),
+      'tahun_terpilih' => $tahun,
+      'bulan_terpilih' => $bulan,
+      'total_statistik' => $this->laporanModel->getTotalStatistikPenjualan($tahun, $bulan),
+      'statistik_per_bulan' => $this->laporanModel->getStatistikPenjualanPerBulan($tahun),
     ];
-
     return $this->template->display('dashboard/laporan/index', $data);
   }
 
@@ -49,19 +43,16 @@ class Laporan extends BaseController
    */
   public function penjualan()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = [
       'title' => 'Laporan Penjualan Properti',
       'tahun_terpilih' => $tahun,
       'bulan_terpilih' => $bulan,
-      'tahun_tersedia' => $this->laporanModel->getTahunTersedia(),
-      'bulan_tersedia' => $this->laporanModel->getBulanTersedia($tahun),
       'laporan_penjualan' => $this->laporanModel->getLaporanPenjualan($tahun, $bulan),
       'laporan_by_kategori' => $this->laporanModel->getLaporanPenjualanByKategori($tahun, $bulan),
       'total_statistik' => $this->laporanModel->getTotalStatistikPenjualan($tahun, $bulan),
-      'bulan_names' => get_bulan(),
     ];
 
     return $this->template->display('dashboard/laporan/penjualan', $data);
@@ -72,18 +63,15 @@ class Laporan extends BaseController
    */
   public function performaAgen()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = [
       'title' => 'Laporan Performa Agen',
       'tahun_terpilih' => $tahun,
       'bulan_terpilih' => $bulan,
-      'tahun_tersedia' => $this->laporanModel->getTahunTersedia(),
-      'bulan_tersedia' => $this->laporanModel->getBulanTersedia($tahun),
       'laporan_performa' => $this->laporanModel->getLaporanPerformaAgen($tahun, $bulan),
       'total_statistik' => $this->laporanModel->getTotalStatistikPenjualan($tahun, $bulan),
-      'bulan_names' => get_bulan(),
     ];
 
     return $this->template->display('dashboard/laporan/performa_agen', $data);
@@ -94,8 +82,8 @@ class Laporan extends BaseController
    */
   public function detailAgen($agent_id)
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     // Ambil data agen
     $agen = $this->userModel->find($agent_id);
@@ -107,11 +95,8 @@ class Laporan extends BaseController
       'title' => 'Detail Penjualan Agen - ' . $agen['name'],
       'tahun_terpilih' => $tahun,
       'bulan_terpilih' => $bulan,
-      'tahun_tersedia' => $this->laporanModel->getTahunTersedia(),
-      'bulan_tersedia' => $this->laporanModel->getBulanTersedia($tahun),
       'agen' => $agen,
       'detail_penjualan' => $this->laporanModel->getDetailPenjualanAgen($agent_id, $tahun, $bulan),
-      'bulan_names' => get_bulan(),
     ];
 
     return $this->template->display('dashboard/laporan/detail_agen', $data);
@@ -122,8 +107,8 @@ class Laporan extends BaseController
    */
   public function exportPenjualanPdf()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = [
       'title' => 'Laporan Penjualan Properti',
@@ -148,8 +133,8 @@ class Laporan extends BaseController
    */
   public function exportPerformaAgenPdf()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = [
       'title' => 'Laporan Performa Agen',
@@ -173,8 +158,8 @@ class Laporan extends BaseController
    */
   public function exportPenjualanExcel()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = [
       'title' => 'Laporan Penjualan Properti',
@@ -193,8 +178,8 @@ class Laporan extends BaseController
    */
   public function exportPerformaAgenExcel()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = [
       'title' => 'Laporan Performa Agen',
@@ -212,8 +197,8 @@ class Laporan extends BaseController
    */
   public function getDataPenjualan()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = $this->laporanModel->getLaporanPenjualan($tahun, $bulan);
 
@@ -228,8 +213,8 @@ class Laporan extends BaseController
    */
   public function getDataPerformaAgen()
   {
-    $tahun = $this->request->getGet('tahun') ?? date('Y');
-    $bulan = $this->request->getGet('bulan') ?? date('n');
+    $tahun = defaultValue($this->request->getGet('tahun'), date('Y'));
+    $bulan = defaultValue($this->request->getGet('bulan'), null);
 
     $data = $this->laporanModel->getLaporanPerformaAgen($tahun, $bulan);
 

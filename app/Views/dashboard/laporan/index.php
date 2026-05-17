@@ -50,7 +50,6 @@
 <?php endif ?>
 
 <?= $this->section('js') ?>
-<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 <script>
   <?php if (!empty($statistik_per_bulan)): ?>
     // Grafik Penjualan Per Bulan
@@ -67,7 +66,7 @@
           label: 'Total Transaksi',
           data: [
             <?php foreach ($statistik_per_bulan as $stat): ?>
-                                <?= $stat['total_transaksi'] ?>,
+              <?= $stat['total_transaksi'] ?>,
             <?php endforeach; ?>
           ],
           borderColor: 'rgb(75, 192, 192)',
@@ -77,7 +76,7 @@
           label: 'Total Omset (Juta)',
           data: [
             <?php foreach ($statistik_per_bulan as $stat): ?>
-                                <?= round($stat['total_penjualan'] / 1000000, 2) ?>,
+              <?= round($stat['total_penjualan'] / 1000000, 2) ?>,
             <?php endforeach; ?>
           ],
           borderColor: 'rgb(255, 99, 132)',

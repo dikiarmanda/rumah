@@ -38,7 +38,7 @@ class LaporanModel extends Model
         ');
     $builder->join('properties p', 't.property_id = p.id', 'left');
     $builder->join('categories c', 'p.type = c.id', 'left');
-    $builder->join('agents a', 't.property_id = a.property_id', 'left');
+    // $builder->join('agents a', 't.property_id = a.property_id', 'left');
     $builder->join('users u', 't.agen_id = u.id', 'left');
     $builder->where('t.status', 'Valid');
 
@@ -202,7 +202,7 @@ class LaporanModel extends Model
     }
 
     // Filter berdasarkan bulan
-    if ($bulan) {
+    if ($bulan && $bulan != 'all') {
       $builder->where('MONTH(t.tanggal_penjualan)', $bulan);
     }
 
@@ -232,7 +232,7 @@ class LaporanModel extends Model
     }
 
     // Filter berdasarkan bulan
-    if ($bulan) {
+    if ($bulan && $bulan != 'all') {
       $builder->where('MONTH(t.tanggal_penjualan)', $bulan);
     }
 
@@ -247,13 +247,14 @@ class LaporanModel extends Model
    */
   public function getTahunTersedia()
   {
-    $builder = $this->db->table('transactions t');
-    $builder->select('DISTINCT YEAR(t.tanggal_penjualan) as tahun');
-    $builder->where('t.status', 'Valid');
-    $builder->where('t.tanggal_penjualan IS NOT NULL');
-    $builder->orderBy('tahun', 'DESC');
-
-    return $builder->get()->getResultArray();
+    $tahun_sekarang = date('Y');
+    $result = [];
+    foreach (range($tahun_sekarang, 2025) as $tahun) {
+      $result[] = [
+        'tahun' => $tahun,
+      ];
+    }
+    return $result;
   }
 
   /**
@@ -261,17 +262,17 @@ class LaporanModel extends Model
    */
   public function getBulanTersedia($tahun = null)
   {
-    $builder = $this->db->table('transactions t');
-    $builder->select('DISTINCT MONTH(t.tanggal_penjualan) as bulan');
-    $builder->where('t.status', 'Valid');
-    $builder->where('t.tanggal_penjualan IS NOT NULL');
+    // Ambil array bulan dari fungsi helper get_bulan
+    $bulan_arr = get_bulan();
 
-    if ($tahun) {
-      $builder->where('YEAR(t.tanggal_penjualan)', $tahun);
+    // Format hasil menjadi array indeks bulan dan nama bulan
+    $result = [];
+    foreach ($bulan_arr as $bulan_num => $nama_bulan) {
+        $result[] = [
+            'bulan' => (int)$bulan_num
+        ];
     }
 
-    $builder->orderBy('bulan', 'ASC');
-
-    return $builder->get()->getResultArray();
+    return $result;
   }
 }
